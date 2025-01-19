@@ -1,0 +1,35 @@
+Orientation:
+
+Introduction to IT/SW
+-> Software
+-> DevOps why and what
+-> SDLC
+-> Agile
+
+Linux:
+	OS
+	Windows vs Linux
+	Setup Linux
+	Working with Linux
+	Linux commands 
+	Shell scripting
+
+
+AWS cloud:
+	AWS components
+
+DevOps Tools:
+	Overview
+	Role of DevOps Engineer
+	Maven & GitHub
+	Docker, Kubernetes, Jenkins
+	SonarQube
+	Ansible
+	Terraform (IAC)
+	
+Projects:
+	Terraform project
+	Ansible project
+	Jenkins project
+	Monitoring project
+	one final project with all of them put together
