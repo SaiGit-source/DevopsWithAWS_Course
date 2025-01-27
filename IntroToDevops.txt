@@ -90,6 +90,18 @@ Backend App -> Java + SpringBoot, JS + NodeJs, Python + Django, C# + .Net
 can they both communicate? Not at all. so we need a universal language to exchange data (JSON)
 Database -> Storage: Oracle, MySQL, MongoDB, Cassandra
 
+
+Architectural patterns: 1. Monolith and 2. Microservices
+
+If we develop application where all functionalities will be part of one application -> Monolith
+You are going to develop multiple applications for functionalities -> thats Microservices (in Backend we develop multiple applications like Flight booking service, Car rentals, Hotels, Tourist attractions, all deployed in different servers)
+
+Code -> Compile, Build, Package, Deploy -> end user
+if any minor change in Backend, we have to go through the same process. This deployment process could take 3-4 hours time and users cannot access our application during that time. For Monolith, it deployment takes a long time. However, in Microservices, the deployment will take only a few minutes because we re-deploy only the small part and not the entire application once again.
+
+SDLC -> Software Development Lifecycle
+
+ 
  
 
 
