@@ -1,0 +1,122 @@
+Intro notes: DevOps with AWS
+
+
+Development + Operations
+
+
+DevOps is a process in IT industry to simplify application delivery process to client with higher quality
+
+===> promotes collaboration between development and operations teams
+
+Develop application + Build & Deploy application -> DevOps is the second part
+
+Development team: the one that develops the application: 
+					Requirements gathering
+					Requirement analysis (analyze whatever client demands)
+					System Design of the software
+					Development of application (coding)
+					Unit testing
+					Code integration
+					Bug fixing
+
+DevOps: roles and responsibility
+		Understand infrastructure requirements like how many servers are needed? how much storage? Backup, Network, Security
+		Infrastructure provisioning or creation in the cloud (AWS, Azure, GCP, )
+		To create infrastructure, we use the tool called as "Terraform"
+		Configuration management (tool is Ansible). say you have created 10 servers/virtual machines on the cloud. you need to deploy a Java application, for that you got to install Java in all 10 machines. To automate configuration, we can go with Ansible. Like copy file from one machine to another, installing any dependency or software. To automate this configuration, we have one tool called as "Ansible".
+		The most important part, you should know to work with Linux machines
+		Code repository servers (Bitbucket, GitHub, )
+		How to work with Docker for containerization: Application code + App dependencies => containerization
+		To manage containers -> we should know "Kubernetes" (Orchestration) -> how to scale up or down containers?
+		To automate build and deploy processes with Jenkins (CI/CD pipelines comes into picture). creating, executing, monitoring pipelines etc
+		Infra monitoring and application monitoring
+
+Skillset: DevOps Engineers:
+		Software Development Lifecycle
+			-> Waterfall model
+			-> Agile model
+			-> Scrum framework
+			-> Jira tool
+			
+		Application Architecture
+			-> Frontend
+			-> Backend
+			-> what tech stacks are used
+			-> Database
+
+		Linux OS
+			-> Linux commands
+			-> Shell scripting
+		
+		Cloud computing (AWS)
+			-> How to create a free-tier account? How to create virtual machines, load balancer, autoscaling, block storage -> EC2
+			-> Unlimited storage (S3)
+			-> Relational database (RDS)
+			-> Users & Group management (IAM)
+			-> Virtual private cloud (VPC)
+			-> Kubernetes cluster in AWS platform
+			-> Domain mapping (Route 53)
+			-> Cloud watch for monitoring
+			-> SNS -> Simple Notification Services
+
+		DevOps:
+			To create infrastructure in cloud -> Terraform
+			Configuration management -> Ansible
+			Build tools (Maven and Gradle)
+			GitHub
+			Web server to run web application -> Tomcat
+			Code review -> SonarQube
+			Nexus (Artifactory server)
+			Containerization -> Docker
+			Kubernetes 	
+			Automate build and deployment -> Jenkins
+			Prometheus & Grafana
+			Application log monitoring tools
+
+		Fundamentals before DevOps:
+			Linux, AWS cloud, DevOps tools, Projects, Interviews
+
+What's a Software project?
+	Collection of programs/applications -> to develop this program or applications -> Programming languages are a way to talk to machines. Using these languages, we are writing instructions. Why we develop software? Simplify the human life to make it easy, to solve the problem. To deposit money into bank account, we dont go to Bank or to book tickets we are not going to train station. We use Software instead. 
+StandAlone or Desktop App (only one user at a time -> Calculator, Notepad, they are only available to only one user)
+Web App -> multiple end users at the same time like Facebook, Youtube, Netflix
+Distributed enterprise applications -> they are also web app only -> Enduser is trying to purchase a course online, in turn the web app is using 3rd party like Paypal, Razorpay etc. So here lets say Udemy is one business taking help of another business Paypal (B2B). Booking.com -> taking help from AirIndia server to book tickets
+Mobile applications: WhatsApp, Insta. For mobile and web application what is changing is the frontend React vs Android/iOS. Backend, database everything is the same for both web and mobile
+
+Application Architecture: 3 components -> Frontend (UI), Backend (Actual business logic), Database (Storage)
+
+Frontend stack -> UserInterface (HTML, CSS, Javascript, React/Angular) what you can see
+Backend App -> Java + SpringBoot, JS + NodeJs, Python + Django, C# + .Net
+can they both communicate? Not at all. so we need a universal language to exchange data (JSON)
+Database -> Storage: Oracle, MySQL, MongoDB, Cassandra
+
+ 
+
+
+
+
+
+
+
+
+
+
+			
+
+			
+			
+			
+		
+		
+
+
+
+		
+
+		
+		
+		
+		
+		
+		
+						
