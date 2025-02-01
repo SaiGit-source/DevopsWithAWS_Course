@@ -101,6 +101,111 @@ if any minor change in Backend, we have to go through the same process. This dep
 
 SDLC -> Software Development Lifecycle
 
+How software projects are developed? 
+- Requirement gathering from client
+- Requirement analysis -> whether possible to build software or not
+- Designing / planning on how it has to be built
+- Development (coding comes into picture, writing software code)
+- Testing of application
+- Deployment of application -> putting into server
+- Maintenance of application -> support
+
+Two models in SDLC: Waterfall model (Outdated) and Agile methodology (currently following Agile, it is trending)
+
+Waterfall model: We follow a linear model or sequential model of developing application
+Requirement analysis -> System design -> Implementation / coding -> Testing -> Deployment or delivery of application -> Maintenance
+After Requirement analysis, there is no client's involvement. 
+In Waterfall model:
+	Requirements are fixed
+	Duration is fixed
+	Budget is fixed
+	Client will only see the project at the end
+	No client involvement throughout the process
+	Not a good approach
+	For Small scale application, Waterfall is fine
+	For a larger application, no client involvement is a loss of money, loss of time etc. this model fails in case of large enterprise application
+
+Thats why we need Agile model:
+
+Agile model:
+	Entire project development + testing + deployment is a continuous process. we are going to follow iterative approach, we will not develop application in one go here, we will develop in multiple phases. We develop application in multiple phases or multiple sprints where at every phase our client is also involved. We follow one of the frameworks under the Agile model, which is Scrum framework. 
+Scrum framework: 
+	Backlog -> The tasks which to be completed -> pending tasks is called as Backlog -> 
+	Scrum -> one of the methodology under Agile, Daily status call or standup meetings (15 to 20 minutes)
+	Sprint -> Phase -> i have divided application into 4 phases/sprints. Priority tasks planned for delivery. 2 weeks -> 4 tasks
+	Retrospect -> review meeting on the Sprint whether we met the requirement or not
+
+In the world of Agile: Are requirements fixed? No requirements are not fixed. Project budget is also not fixed. Project duration is also not fixed. Definition of 'Done' is fully done 
+Entire Project will be developed in multiple sprints
+Every Sprint we are going to plan, design, develop, test and deliver
+Client involvement will be there in every Sprint
+Agile is more flexible than Waterfall model
+
+DevOps is Development + Operations
+Analyze, Design, Development, Pushed into Git repo, then phase is Build & Deployment. As DevOps we are involved mostly Build & Deployment. DevOps is a culture, process, set of practices to enable communications between development and operations. All of them will result in simple project delivery and quick with high quality
+7c's of DevOps -> defines lifecycle of DevOps
+	Continuous planning
+	Continuous development
+	Continuous integration
+	Continuous testing of application
+	Continuous deployment of application
+	Continuous monitoring of application
+	Continuous feedback 
+
+Linux VM:
+	Infrastructure: What's infrastructure? The resources required to run a company and its projects is referred as infrastructure 
+						Servers -> machines (Computers)
+						Database
+						Storage
+						Security
+						Monitoring
+						Network
+Deploying our application means, keeping our application in Tomcat server and that will enable our application to be accessed around the world
+Two options: on-premise (our own server, our own security etc), cloud (pay as you go service, renting services, )
+Load balancing: Assume one application is deployed into 5 servers: we have 5 instances of application. there is 25 requests coming to application, there is a concept of load balancing where requests will be assigned to instances based on round-robin method. Examples of infrastructure providers are AWS, Azure, GCP etc. With AWS, as requests increase, automatically the infrastructure will scale-up and we dont have to worry. Amazon is providing all these services over internet but they maintain the infrastructure somewhere in data centers
+
+
+AWS free tier account -> 1 year free account -> debit/credit card required
+
+
+
+
+
+
+ 
+
+
+
+						
+						
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
  
  
 
