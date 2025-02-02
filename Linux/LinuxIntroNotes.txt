@@ -1,0 +1,74 @@
+Linux OS:
+
+What's Operating System? Combination of OS and Processor is required for any computer. required to manage hardware and software. System software that acts like a mediator between enduser and machine.
+
+User communicates with computer using OS. Without OS we cannot run or use any machine. Examples of OS : Linux, Windows, MacOS, Android, iOS
+
+Windows is more friendly and less costly than MacOS. GUI (Graphical User Interface). Single user based OS. Less security feature (thats why Windows OS computers require anti-virus). Windows is more preferred for personal use.  
+
+if you want to use Windows OS for server computer / application deployment, Windows is not recommended.
+
+
+Linux OS: Linus Torvalds -> Unix OS Challenges so he came up with Minux OS, Linux = Minux + Linus. It is free + Open source. 
+	Provides high security
+	Highly recommended for App/Project operation
+	CLI based OS (Command line interface)
+
+To setup infrastructure of software projects -> Linux operating system is used
+
+Red Hat Linux, Amazon Linux, Ubuntu Linux, Susse Linux, Fedora Linux... 200+ Linux -> 
+
+that's where Linux distribution / flavors come into picture -> Why distribution? Linus made Linux made free and Open source. Every large corporations downloaded the code and made their changes based on their needs then they released into market. In this course, we are going to explore Amazon Linux, Ubuntu Linux, RedHat Linux 
+
+Windows OS machine -> SSH protocol (MobaXterm,Putty) -> AWS cloud Linux EC2
+
+-> Create AWS free-tier account
+-> Log into AWS cloud account
+-> Create Linux virtual machine using AWS EC2 instance
+
+Linux file system:
+
+In Linux, everything doesn't matter it's a folder etc, it is seen as a file. 
+	-> File that starts with '-' hyphen : ordinary file not a special file
+	-> File starts with 'd': Folder (Directory file)
+	-> Starts with 'l': Link file or shortcut file
+
+pwd -> present working directory -> Pwd, cd .. to go back one level, cd ec2-user to go back into folder
+
+ls for contents in directory
+
+to create a Directory file: mkdir devops
+
+multiple directories: mkdir udemy alien
+
+Delete a folder: rmdir alien
+
+to change directory: cd <dir-name>
+
+to come out of directory: cd ..
+
+create a normal file: touch alien.txt
+
+delete a file: rm alien.txt
+
+touch a1.txt a2.txt a3.txt
+
+ls -l : it will list in alphabetical incremental order
+
+ls -lr : alphabetical reverse order
+
+ls -lt : in latest order
+
+ls -ltr : in the order of creation, oldest file first
+
+
+
+
+
+
+
+
+
+
+
+
