@@ -1,0 +1,408 @@
+Linux 2:
+
+mv alien.txt java.txt -> mv command to rename and move files
+
+mv <present_name> <new_name> it will rename files
+
+mv <present-location> <new-location> -> this will move file into devops folder:  mv java.txt devops
+
+rm java.txt -> to delete a file
+
+rm t*.txt 
+
+
+[ec2-user@ip-172-31-5-197 ~]$ rmdir devops
+rmdir: failed to remove 'devops': Directory not empty
+
+
+we have to apply recursive force : rmdir -rf devops
+
+> overrides data in file
+[ec2-user@ip-172-31-5-197 devops]$ cat > python.txt
+Python is one of the most used languages
+Python is beginner friendly
+
+CTRL + d to get out of the file
+
+[ec2-user@ip-172-31-5-197 devops]$ ls
+f1.txt  f2.txt  java.txt  python.txt
+[ec2-user@ip-172-31-5-197 devops]$ cat python.txt
+Python is one of the most used languages
+Python is beginner friendly
+
+>> appends new content to the file
+[ec2-user@ip-172-31-5-197 devops]$ cat >> python.txt
+Python is easy to start but gets difficult for development
+[ec2-user@ip-172-31-5-197 devops]$ cat >> python.txt
+[ec2-user@ip-172-31-5-197 devops]$ cat  python.txt
+Hello world!
+Python is easy to start but gets difficult for development
+
+
+ec2-user@ip-172-31-5-197 devops]$ cat >> python.txt
+Python is mostly used in the world of AI
+[ec2-user@ip-172-31-5-197 devops]$ cat python.txt
+Hello world!
+Python is easy to start but gets difficult for development
+Python is mostly used in the world of AI
+
+same data with some numberings also
+[ec2-user@ip-172-31-5-197 devops]$ cat -n python.txt
+     1  Hello world!
+     2  Python is easy to start but gets difficult for development
+     3  Python is mostly used in the world of AI
+[ec2-user@ip-172-31-5-197 devops]$
+
+
+Reverse alphabetical order
+[ec2-user@ip-172-31-5-197 devops]$ ls -lr
+total 4
+-rw-r--r--. 1 ec2-user ec2-user 113 Feb  9 02:19 python.txt
+-rw-r--r--. 1 ec2-user ec2-user   0 Feb  8 21:20 java.txt
+-rw-r--r--. 1 ec2-user ec2-user   0 Feb  8 22:00 f2.txt
+-rw-r--r--. 1 ec2-user ec2-user   0 Feb  8 22:00 f1.txt
+
+
+
+[ec2-user@ip-172-31-5-197 devops]$ history
+    1  ls
+    2  touch alien.txt
+    3  ls
+    4  mv alien.txt java.txt
+    5  ls
+    6  mv java.txt devops
+
+To delete file and directory: rm
+
+rm <filename>
+rm *.txt
+rm t*.txt
+rm -rf <dirname> -> directory with some files
+rmdir -> delete empty directory
+
+
+for copying in Linux we dont need CTRL + C
+just select the lines it will be copied automatically
+
+
+content in reverse order
+
+[ec2-user@ip-172-31-5-197 devops]$ cat > aws.txt
+AWS is from Amazon
+AWS has many services
+it is started in 2006
+[ec2-user@ip-172-31-5-197 devops]$ cat  aws.txt
+AWS is from Amazon
+AWS has many services
+it is started in 2006
+[ec2-user@ip-172-31-5-197 devops]$ tac aws.txt
+it is started in 2006
+AWS has many services
+AWS is from Amazon
+
+
+cp is for copy data into a new file
+
+[ec2-user@ip-172-31-5-197 devops]$ cp aws.txt alien.txt
+[ec2-user@ip-172-31-5-197 devops]$ cat alien.txt
+AWS is from Amazon
+AWS has many services
+it is started in 2006
+
+
+[ec2-user@ip-172-31-5-197 devops]$ ls -l
+total 12
+-rw-r--r--. 1 ec2-user ec2-user  88 Feb  9 02:41 alien.txt
+-rw-r--r--. 1 ec2-user ec2-user  63 Feb  9 02:39 aws.txt
+-rw-r--r--. 1 ec2-user ec2-user   0 Feb  9 02:44 cloud.txt
+-rw-r--r--. 1 ec2-user ec2-user   0 Feb  8 22:00 f1.txt
+-rw-r--r--. 1 ec2-user ec2-user   0 Feb  8 22:00 f2.txt
+-rw-r--r--. 1 ec2-user ec2-user   0 Feb  8 21:20 java.txt
+-rw-r--r--. 1 ec2-user ec2-user 113 Feb  9 02:19 python.txt
+
+
+cat open both files then > sends stdout into a file
+[ec2-user@ip-172-31-5-197 devops]$ cat alien.txt aws.txt > cloud.txt
+[ec2-user@ip-172-31-5-197 devops]$ cat cloud.txt
+AWS is from Amazon
+AWS has many services
+it is started in 2006
+aline file has more data
+AWS is from Amazon
+AWS has many services
+it is started in 2006
+aline file has more data
+
+
+cat > f1.txt -> it will create a file and we can add data (ctrl + D to come out of writing)
+cat >> f1.txt -> append data to existing file
+cat f2.txt -> check data or display data of file
+
+Copy data: cp
+cp f1.txt f2.txt -> f1 data will be added to f2. if there is any data in f2.txt, that will be replaced
+
+Copy more than one file data into another file:
+cat f1.txt f2.txt > f3.txt
+
+cat -n f1.txt -> display data with numbering
+
+tac f1.txt -> print file content from bottom to top
+rev f1.txt -> reverse each line and each word of that line
+
+cat f1.txt will display all content of that file
+to display file data from top (default is 10 lines)
+head f1.txt
+head -n 5 f1.txt
+tail -n 5 f1.txt
+tail -f file.txt to get the live data
+grep 'AWS' f1.txt -> print all lines having AWS keyword
+grep -i 'aws' f1.txt -> print all lines having AWS ignoring case sensitivity
+grep -n 'aws' f1.txt (print lines having aws with line number)
+grep -v 'aws' f1.txt (prints lines which doesn't have aws keyword)
+grep 'aws' * (search for aws keyword in all files of pwd)
+wc f1.txt (num of lines, words, characters)
+
+file creation in Linux:
+mkdir <filename> create new directory file
+touch: creates empty file
+cat: creates file with data
+cp: copy one file into another 
+vi: create and open file for editing (vi f2.txt)
+
+Reading file data:
+cat: print file data from top to bottom cat <filename>
+tac: print line data from bottom to top
+rev: print each line and each word of that line in reverse order
+head: print first 10 lines of file
+tail: print last 10 lines
+vi: open the file
+
+
+
+[ec2-user@ip-172-31-5-197 devops]$ rev cloud.txt
+nozamA morf si SWA
+secivres ynam sah SWA
+6002 ni detrats si ti
+atad erom sah elif enila
+nozamA morf si SWA
+secivres ynam sah SWA
+6002 ni detrats si ti
+atad erom sah elif enila
+
+
+To print only top 10 lines
+[ec2-user@ip-172-31-5-197 devops]$ head cloud.txt
+AWS is from Amazon
+AWS has many services
+it is started in 2006
+aline file has more data
+AWS is from Amazon
+AWS has many services
+it is started in 2006
+aline file has more data
+AWS is the most popular cloud service provider
+Azure is also famous
+
+
+only top 5 lines
+[ec2-user@ip-172-31-5-197 devops]$ head -n 5 cloud.txt
+AWS is from Amazon
+AWS has many services
+it is started in 2006
+aline file has more data
+AWS is from Amazon
+
+
+prints last 5 lines from bottom
+[ec2-user@ip-172-31-5-197 devops]$ tail -n 5 cloud.txt
+AWS Azure Google top 3 cloud providers
+AWS is more preferred
+AWS 11th line
+AWS 12th line
+AWS 13th line
+
+
+[ec2-user@ip-172-31-5-197 devops]$ tail -f cloud.txt
+it is started in 2006
+aline file has more data
+AWS is the most popular cloud service provider
+Azure is also famous
+Google also has cloud services
+AWS Azure Google top 3 cloud providers
+AWS is more preferred
+AWS 11th line
+AWS 12th line
+AWS 13th line
+
+
+Global regular expression print: grep. it is case-sensitive
+
+[ec2-user@ip-172-31-5-197 devops]$ grep 'AWS' cloud.txt
+AWS is from Amazon
+AWS has many services
+AWS is from Amazon
+AWS has many services
+AWS is the most popular cloud service provider
+AWS Azure Google top 3 cloud providers
+AWS is more preferred
+AWS 11th line
+AWS 12th line
+AWS 13th line
+
+ignore case-sensitivity
+
+[ec2-user@ip-172-31-5-197 devops]$ grep -i 'aws' cloud.txt
+AWS is from Amazon
+AWS has many services
+AWS is from Amazon
+AWS has many services
+AWS is the most popular cloud service provider
+AWS Azure Google top 3 cloud providers
+AWS is more preferred
+AWS 11th line
+AWS 12th line
+AWS 13th line
+
+
+alongside numbering
+
+[ec2-user@ip-172-31-5-197 devops]$ grep -n 'AWS' cloud.txt
+1:AWS is from Amazon
+2:AWS has many services
+5:AWS is from Amazon
+6:AWS has many services
+9:AWS is the most popular cloud service provider
+12:AWS Azure Google top 3 cloud providers
+13:AWS is more preferred
+14:AWS 11th line
+15:AWS 12th line
+16:AWS 13th line
+
+
+data except 'AWS'
+
+[ec2-user@ip-172-31-5-197 devops]$ grep -v 'AWS' cloud.txt
+it is started in 2006
+aline file has more data
+it is started in 2006
+aline file has more data
+Azure is also famous
+Google also has cloud services
+
+
+All files it looks for match
+[ec2-user@ip-172-31-5-197 devops]$ grep 'AWS' *
+alien.txt:AWS is from Amazon
+alien.txt:AWS has many services
+aws.txt:AWS is from Amazon
+aws.txt:AWS has many services
+cloud.txt:AWS is from Amazon
+cloud.txt:AWS has many services
+cloud.txt:AWS is from Amazon
+cloud.txt:AWS has many services
+cloud.txt:AWS is the most popular cloud service provider
+cloud.txt:AWS Azure Google top 3 cloud providers
+cloud.txt:AWS is more preferred
+cloud.txt:AWS 11th line
+cloud.txt:AWS 12th line
+cloud.txt:AWS 13th line
+
+
+word count -> 16 lines, 73 words, 378 characters
+[ec2-user@ip-172-31-5-197 devops]$ wc cloud.txt
+ 16  73 378 cloud.txt
+
+
+shows the difference:
+[ec2-user@ip-172-31-5-197 devops]$ diff cloud.txt aws.txt
+5,16d4
+< AWS is from Amazon
+< AWS has many services
+< it is started in 2006
+< aline file has more data
+< AWS is the most popular cloud service provider
+< Azure is also famous
+< Google also has cloud services
+< AWS Azure Google top 3 cloud providers
+< AWS is more preferred
+< AWS 11th line
+< AWS 12th line
+< AWS 13th line
+
+
+[ec2-user@ip-172-31-5-197 devops]$ cmp cloud.txt aws.txt
+cmp: EOF on aws.txt after byte 88, line 4
+
+
+Text editors in Linux:
+visual editor -> vi (default editor in Linux)
+other two options to create a new file: touch, cat
+using vi we can create new files and we can modify existing files
+
+vi demo.txt
+vi command has 3 modes: 1. Command mode (just to open the file), 2. Insert mode (to edit the file -> press 'i'), 3. Escape mode (to come out of insert mode)
+save and close: :wq
+close file without saving: :q!
+
+vi command will open the file if its available and if there is no file then it will create a new file and open that new file
+
+to edit data, press 'i'
+
+[ec2-user@ip-172-31-5-197 devops]$ vi demo.txt
+[ec2-user@ip-172-31-5-197 devops]$ vi cloud.txt
+[ec2-user@ip-172-31-5-197 devops]$ cat cloud.txt
+AWS is from Amazon
+AWS has many services
+it is started in 2006
+aline file has more data
+AWS is from Amazon
+AWS has many services
+it is started in 2006
+aline file has more data
+AWS is the most popular cloud service provider
+Azure is also famous
+Google also has cloud services
+AWS Azure Google top 3 cloud providers
+AWS is more preferred
+AWS 11th line
+AWS 12th line
+AWS 13th line
+AWS 14line added with vi
+
+
+SED command:
+SED -> Stream Editor -> very powerful command in Linux
+edit a file without opening it
+
+i want to replace whereever 'cloud' is there with 'CLOUD'
+
+[ec2-user@ip-172-31-5-197 devops]$ sed 's/cloud/CLOUD/' cloud1.txt
+AWS is from Amazon
+AWS has many services
+it is started in 2006
+aline file has more data
+AWS is from Amazon
+AWS has many services
+it is started in 2006
+aline file has more data
+AWS is the most popular CLOUD service provider
+Azure is also famous
+Google also has CLOUD services
+AWS Azure Google top 3 CLOUD providers
+AWS is more preferred
+AWS 11th line
+AWS 12th line
+AWS 13th line
+AWS 14line added with vi
+
+
+
+
+
+
+
+
+
+
+
+
