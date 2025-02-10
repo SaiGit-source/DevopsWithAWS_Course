@@ -1,0 +1,231 @@
+Linux 3 notes
+
+SED command -> Stream EDitor
+
+say we have a collection of data, we can create a stream of it and double each value without affecting the original data
+
+Data inside this file: vi -> insert 'i', escape 'esc'
+
+Using SED command we can perform operations on file without having to open the file
+
+for vi, we have to open the file first then edit and save
+
+SED happens to be very powerful command in Linux, process the data (substitute, delete, insert)
+
+sed 's/<OLD>/<NEW>/ filename ===> sed substitute line with Line. 's' tells sed to perform text replacement
+sed 's/<OLD>/<NEW>/2' f1.txt ===> replace 2nd occurrence of old text with new text in every line
+sed 's/<OLD>/<NEW>/g' f1.txt ===> replace all the occurrences of old text with new text every line
+sed -i 's/<OLD>/<NEW>/g' f1.txt ===> 'i' ignore the cases, substitute and SAVE changes in the original file
+sed -i '3d' f1.txt ===> deletes 3rd line from file permanently
+sed -i '$d' f1.txt ===> deletes last line from file permanently
+sed -i '<lineNumber>$d' f1.txt ===> deletes from nth line to last line in file
+sed -i '3,6d' f1.txt ==> deletes from 3rd to 6th line
+sed -n '/word/p' f1.txt ==> prints all lines which contains the keyword
+sed -n '/Python/p' demo.txt --> prints all lines contains 'Python' keyword
+sed '/Python/d' demo.txt ===> deletes all lines which contains 'Python' keyword
+sed '$a\I am loving Linux commands' f1.txt ==> add given text after last line
+ 
+
+
+'s' means substitute 'line' with 'Line'
+[ec2-user@ip-172-31-5-197 devops]$ sed 's/line/Line/' cloud1.txt
+AWS is from Amazon
+AWS has many services
+it is started in 2006
+aLine file has more data
+AWS is from Amazon
+AWS has many services
+it is started in 2006
+aLine file has more data
+AWS is the most popular cloud service provider
+Azure is also famous
+Google also has cloud services
+AWS Azure Google top 3 cloud providers
+AWS is more preferred
+AWS 11th Line
+AWS 12th Line
+AWS 13th Line
+AWS 14Line added with vi
+
+
+
+that change is not there in cloud1.txt file
+[ec2-user@ip-172-31-5-197 devops]$ cat cloud1.txt
+AWS is from Amazon
+AWS has many services
+it is started in 2006
+aline file has more data
+AWS is from Amazon
+AWS has many services
+it is started in 2006
+aline file has more data
+AWS is the most popular cloud service provider
+Azure is also famous
+Google also has cloud services
+AWS Azure Google top 3 cloud providers
+AWS is more preferred
+AWS 11th line
+AWS 12th line
+AWS 13th line
+AWS 14line added with vi
+
+
+[ec2-user@ip-172-31-5-197 devops]$ cat demo.txt
+Java is the most popular language, Java is always great
+Java is the best and Java is fav
+Java
+Java
+Java
+Random data
+
+
+Changing only the second occurrence
+[ec2-user@ip-172-31-5-197 devops]$ sed 's/Java/Javascript/2' demo.txt
+Java is the most popular language, Javascript is always great
+Java is the best and Javascript is fav
+Java
+Java
+Java
+Random data
+
+
+[ec2-user@ip-172-31-5-197 devops]$ vi demo.txt
+[ec2-user@ip-172-31-5-197 devops]$ sed 's/Java/Javascript/2' demo.txt
+Java is the most popular language, Javascript is always great
+Java is the best and Javascript is fav
+Java Javascript Java
+Java Javascript
+Java
+Random data
+
+/g means global, wherever 'Java' was there, it will replace with 'Javascript'
+[ec2-user@ip-172-31-5-197 devops]$ sed 's/Java/Javascript/g' demo.txt
+Javascript is the most popular language, Javascript is always great
+Javascript is the best and Javascript is fav
+Javascript Javascript Javascript. Javascript.
+Javascript Javascript
+Javascript. Javascript
+Random data
+
+
+for permanent changes in the file
+[ec2-user@ip-172-31-5-197 devops]$ sed -i 's/Java/Javascript/g' demo.txt
+[ec2-user@ip-172-31-5-197 devops]$ cat demo.txt
+Javascript is the most popular language, Javascript is always great
+Javascript is the best and Javascript is fav
+Javascript Javascript Javascript. Javascript.
+Javascript Javascript
+Javascript. Javascript
+Random data
+
+
+deleting the 3rd line
+[ec2-user@ip-172-31-5-197 devops]$ cat demo.txt
+Javascript is the most popular language, Javascript is always great
+Javascript is the best and Javascript is fav
+Javascript Javascript Javascript. Javascript.
+Javascript Javascript
+Javascript. Javascript
+Random data
+[ec2-user@ip-172-31-5-197 devops]$ sed -i '3d' demo.txt
+[ec2-user@ip-172-31-5-197 devops]$ cat demo.txt
+Javascript is the most popular language, Javascript is always great
+Javascript is the best and Javascript is fav
+Javascript Javascript
+Javascript. Javascript
+Random data
+
+
+to delete last line in the file without opening the file
+[ec2-user@ip-172-31-5-197 devops]$ sed -i '3d' demo.txt
+[ec2-user@ip-172-31-5-197 devops]$ cat demo.txt
+Javascript is the most popular language, Javascript is always great
+Javascript is the best and Javascript is fav
+Javascript Javascript
+Javascript. Javascript
+Random data
+[ec2-user@ip-172-31-5-197 devops]$ sed -i '$d' demo.txt
+[ec2-user@ip-172-31-5-197 devops]$ cat demo.txt
+Javascript is the most popular language, Javascript is always great
+Javascript is the best and Javascript is fav
+Javascript Javascript
+Javascript. Javascript
+
+
+
+line 3 to 5 is deleted
+[ec2-user@ip-172-31-5-197 devops]$ cat >> demo.txt
+Java is easy if you learn
+Java is dificult if you write hello world program but easy for enterprise large-scale application
+Python is good for AI
+[ec2-user@ip-172-31-5-197 devops]$ sed -i '3,5d' demo.txt
+[ec2-user@ip-172-31-5-197 devops]$ cat demo.txt
+Javascript is the most popular language, Javascript is always great
+Javascript is the best and Javascript is fav
+Java is dificult if you write hello world program but easy for enterprise large-scale application
+Python is good for AI
+
+
+delete lines matching keyword
+[ec2-user@ip-172-31-5-197 devops]$ sed '/Python/d' demo.txt
+Javascript is the most popular language, Javascript is always great
+Javascript is the best and Javascript is fav
+Java is dificult if you write hello world program but easy for enterprise large-scale application
+Java is used in Enterprise application
+Java is used in big data
+
+
+Print lines matching keyword
+
+[ec2-user@ip-172-31-5-197 devops]$ sed -n '/Python/p' demo.txt
+Python is good for AI
+Python is general purpose programming language
+Python is used in AI
+Python is a scripting language
+
+
+printing from 2nd line to 4th line
+[ec2-user@ip-172-31-5-197 devops]$ sed -n '2,4p' demo.txt
+Javascript is the best and Javascript is fav
+Java is dificult if you write hello world program but easy for enterprise large-scale application
+Python is good for AI
+
+
+insert at 4th line but no permanent changes in file
+[ec2-user@ip-172-31-5-197 devops]$ sed '4i\i am learning DevOps currently' demo.txt
+Javascript is the most popular language, Javascript is always great
+Javascript is the best and Javascript is fav
+Java is dificult if you write hello world program but easy for enterprise large-scale application
+i am learning DevOps currently
+Python is good for AI
+Python is general purpose programming language
+Python is used in AI
+Python is a scripting language
+Java is used in Enterprise application
+Java is used in big data
+Javascript is the most popular language, Javascript is always great
+Javascript is the best and Javascript is fav
+
+
+sed '$a\ I have to learn Linux ' demo.txt
+[ec2-user@ip-172-31-5-197 devops]$ sed '$a\ I have to learn Linux ' demo.txt
+Javascript is the most popular language, Javascript is always great
+Javascript is the best and Javascript is fav
+Java is dificult if you write hello world program but easy for enterprise large-scale application
+Python is good for AI
+Python is general purpose programming language
+Python is used in AI
+Python is a scripting language
+Java is used in Enterprise application
+Java is used in big data
+Javascript is the most popular language, Javascript is always great
+Javascript is the best and Javascript is fav
+
+
+I have to learn Linux
+
+
+
+
+
+

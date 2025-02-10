@@ -1,0 +1,252 @@
+Working with User Accounts:
+
+Linux is a multi-user based operating system
+
+what's the default user currently? it is ec2-user
+
+ec2-user -> Linux VM . we have a few user using the same Linux VM. say we can add user1, user2, user3 to cloud group
+
+
+DevOps group -> we can give proper or similar permissions to a group. All of them in the group will have same permissions to work with it
+
+Linux is a multi-user based operating system, multiple users can access single Linux machine and can perform multi-tasking. -> within one Linux machine, we can create multiple user accounts
+
+Note: In Amazon Linux VM 'ec2-user' is the default user
+
+
+sudo useradd <username> ===> create a new user
+sudo passwd <username> ===> sets password for user
+sudo su <username> ===> switch to user
+cd ~ ==> will go to user home directory
+exit command to come out of that user and user home directory
+sudo userdel <username> ===> Delete user without deleting user home directory
+sudo userdel <username> --remove ===> delete user along with user home directory
+sudo usermod -l <newusername> <oldusername> ===> change user name but it will not change user home directory
+cat /etc/group ==> Display all groups in Linux
+sudo groupadd <groupname> ===> create a group in Linux
+id <username> ===> Display group of user
+sudo usermod -aG <groupname> <username>  ===> it will add user to a new group, however user will also be there in existing groups
+sudo gpasswd -d <username> <groupname> ===> remove user from the group
+sudo lid -g <groupname> ===> Display users present in a group
+sudo groupdel <groupname>  ===> Delete the group
+sudo groupmod -n <newname> <oldname> ===> Change the group name
+sudo usermod -l <New username> <Existing username>
+
+Name of configuration file to provide privileges to user is sudoers file
+sudo cat /etc/sudoers ===> print sudoers file content
+sudo visudo  ===> open that sudoers file to configure and give user privileges. BE CAREFUL!!!
+
+username ALL=(ALL:ALL) ALL
+
+===> After making changes to close this file -> ctrl + x + y + enter
+
+[ec2-user@ip-172-31-5-197 devops]$ whoami
+ec2-user
+
+
+[ec2-user@ip-172-31-5-197 devops]$ whoami
+ec2-user
+[ec2-user@ip-172-31-5-197 devops]$ ls -l /home
+total 0
+drwx------. 4 ec2-user ec2-user 125 Feb  9 22:15 ec2-user
+[ec2-user@ip-172-31-5-197 devops]$ sudo useradd user1
+
+renaming username
+[ec2-user@ip-172-31-5-197 ~]$ sudo useradd alien
+[ec2-user@ip-172-31-5-197 ~]$ sudo su alien
+[alien@ip-172-31-5-197 ec2-user]$ cd ~
+[alien@ip-172-31-5-197 ~]$ whoami
+alien
+[alien@ip-172-31-5-197 ~]$ pwd
+/home/alien
+[alien@ip-172-31-5-197 ~]$ exit
+exit
+[ec2-user@ip-172-31-5-197 ~]$ sudo usermod -l alien1 alien
+[ec2-user@ip-172-31-5-197 ~]$ sudo su alien1
+[alien1@ip-172-31-5-197 ec2-user]$
+
+Working with User Groups:
+
+
+
+
+
+
+
+i added a new user 'user1'
+now we have 2 total users
+
+[ec2-user@ip-172-31-5-197 devops]$ ls -l /home
+total 0
+drwx------. 4 ec2-user ec2-user 125 Feb  9 22:15 ec2-user
+drwx------. 2 user1    user1     62 Feb  9 23:47 user1
+
+
+[ec2-user@ip-172-31-5-197 devops]$ sudo passwd user1
+Changing password for user user1.
+New password:
+BAD PASSWORD: The password fails the dictionary check - it is based on a dictionary word
+Retype new password:
+passwd: all authentication tokens updated successfully.
+
+switch user
+[ec2-user@ip-172-31-5-197 devops]$ sudo su user1
+[user1@ip-172-31-5-197 devops]$
+
+
+going to the user directory
+[user1@ip-172-31-5-197 devops]$ cd ~
+[user1@ip-172-31-5-197 ~]$ pwd
+/home/user1
+
+[user1@ip-172-31-5-197 ~]$ whoami
+user1
+
+
+[ec2-user@ip-172-31-5-197 ~]$ whoami
+ec2-user
+[ec2-user@ip-172-31-5-197 ~]$ sudo userdel user1
+
+
+[ec2-user@ip-172-31-5-197 ~]$ sudo userdel user1
+[ec2-user@ip-172-31-5-197 ~]$ ls -l /home
+total 0
+drwx------. 4 ec2-user ec2-user 125 Feb  9 22:15 ec2-user
+drwx------. 2     1001     1001  83 Feb 10 00:01 user1
+
+
+to see all users
+cat /etc/passwd
+
+
+i already deleted user1 and user2 but only user directories exist
+
+drwx------. 4 ec2-user ec2-user 125 Feb  9 22:15 ec2-user
+drwx------. 2     1001     1001  83 Feb 10 00:01 user1
+drwx------. 2     1001     1001  83 Feb 10 00:15 user2
+drwx------. 2 user3    user3     62 Feb 10 00:14 user3
+
+
+--remove deleted the directory also
+
+[ec2-user@ip-172-31-5-197 ~]$ sudo userdel user3 --remove
+[ec2-user@ip-172-31-5-197 ~]$ ls -l /home
+total 0
+drwx------. 4 ec2-user ec2-user 125 Feb  9 22:15 ec2-user
+drwx------. 2     1001     1001  83 Feb 10 00:01 user1
+drwx------. 2     1001     1001  83 Feb 10 00:15 user2
+
+
+*********************************************
+Working with Groups: 
+
+[ec2-user@ip-172-31-5-197 ~]$ cat /etc/group
+root:x:0:
+ec2-user:x:1000:
+alien:x:1001:
+
+for every user, basically a default group will be created. we can see Alien also
+
+[ec2-user@ip-172-31-5-197 ~]$ sudo groupadd aws
+[ec2-user@ip-172-31-5-197 ~]$ cat /etc/group
+alien:x:1001:
+aws:x:1002:
+
+
+we add a new user user1
+
+ec2-user:x:1000:
+alien:x:1001:
+aws:x:1002:
+user1:x:1003:
+
+
+for every user we create in Linux, one user group will be created with the given username
+
+for alien1, alien1 belongs in alien group
+[ec2-user@ip-172-31-5-197 ~]$ id alien1
+uid=1001(alien1) gid=1001(alien) groups=1001(alien)
+
+
+[ec2-user@ip-172-31-5-197 ~]$ id alien1
+uid=1001(alien1) gid=1001(alien) groups=1001(alien)
+[ec2-user@ip-172-31-5-197 ~]$ sudo usermod -aG alien user1
+[ec2-user@ip-172-31-5-197 ~]$ id alien
+id: ‘alien’: no such user
+[ec2-user@ip-172-31-5-197 ~]$ id alien1
+uid=1001(alien1) gid=1001(alien) groups=1001(alien)
+
+user1 added to alien group, so user1 added to new group
+[ec2-user@ip-172-31-5-197 ~]$ id user1
+uid=1002(user1) gid=1003(user1) groups=1003(user1),1001(alien)
+
+
+user1 is removed from group alien
+
+[ec2-user@ip-172-31-5-197 ~]$ sudo gpasswd -d user1 alien
+Removing user user1 from group alien
+[ec2-user@ip-172-31-5-197 ~]$ id user1
+uid=1002(user1) gid=1003(user1) groups=1003(user1)
+
+
+now added back user1
+
+[ec2-user@ip-172-31-5-197 ~]$ sudo usermod -aG alien user1
+[ec2-user@ip-172-31-5-197 ~]$ id user1
+uid=1002(user1) gid=1003(user1) groups=1003(user1),1001(alien)
+
+
+how many in alien group?
+[ec2-user@ip-172-31-5-197 ~]$ sudo lid -g alien
+ alien1(uid=1001)
+ user1(uid=1002)
+
+
+Group aws is deleted
+[ec2-user@ip-172-31-5-197 ~]$ sudo groupdel aws
+[ec2-user@ip-172-31-5-197 ~]$ cat /etc/group
+root:x:0:
+ec2-user:x:1000:
+alien:x:1001:user1
+user1:x:1003:
+
+
+sudo groupmod -n user1 alien
+
+[ec2-user@ip-172-31-5-197 ~]$ sudo groupmod -n user1 alien
+groupmod: group 'user1' already exists
+[ec2-user@ip-172-31-5-197 ~]$ id user1
+uid=1002(user1) gid=1003(user1) groups=1003(user1),1001(alien)
+
+
+[ec2-user@ip-172-31-5-197 ~]$ sudo usermod -l usernew user1
+usermod: warning: /var/spool/mail/user1 not owned by user1
+
+
+usernew added to user1 group
+[ec2-user@ip-172-31-5-197 ~]$ sudo usermod -l usernew user1
+usermod: warning: /var/spool/mail/user1 not owned by user1
+[ec2-user@ip-172-31-5-197 ~]$ id usernew
+uid=1002(usernew) gid=1003(user1) groups=1003(user1),1001(alien)
+
+
+Sudoers file in Linux: Very important configuration file in Linux machine
+with this file, we can control which user can run command as a superuser
+
+Note: We must be very careful to work with 'sudoers' file as few mistakes can possibly lead to System crash also
+
+[ec2-user@ip-172-31-5-197 ~]$ sudo visudo
+
+Adding user to sudoers
+## The COMMANDS section may have other options added to it.
+##
+## Allow root to run any commands anywhere
+root    ALL=(ALL)       ALL
+usernew ALL=(ALL)       ALL
+
+
+
+
+
+
+
