@@ -1,0 +1,397 @@
+Sudoers file
+
+configuration file in Linux machine, we can control which user(s) can run as super users
+
+[ec2-user@ip-172-31-5-197 devops]$ sudo useradd userFeb15
+[ec2-user@ip-172-31-5-197 devops]$ whoami
+ec2-user
+[ec2-user@ip-172-31-5-197 devops]$ sudo su userFeb15
+[userFeb15@ip-172-31-5-197 devops]$ whoami
+userFeb15
+
+
+To open sudoers: [ec2-user@ip-172-31-5-197 ~]$ sudo cat /etc/sudoers
+
+To get into this file: [ec2-user@ip-172-31-5-197 ~]$ sudo visudo
+
+To add the new user userFeb15
+
+## Allow root to run any commands anywhere
+root    ALL=(ALL)       ALL
+usernew ALL=(ALL:ALL)       ALL
+userFeb15 ALL=(ALL:ALL)     ALL
+
+Ctrl X then Y then enter to get out of the file after saving
+
+[userFeb15@ip-172-31-5-197 ec2-user]$ sudo vi /etc/sshsshd_config
+
+
+
+[ec2-user@ip-172-31-5-197 ~]$ sudo vi /etc/ssh/sshd_config
+
+
+# Explicitly disable PasswordAuthentication. By presetting it, we
+# avoid the cloud-init set_passwords module modifying sshd_config and
+# restarting sshd in the default instance launch configuration.
+PasswordAuthentication no
+PermitEmptyPasswords no
+
+if we want we can change PasswordAuthentication to yes
+
+
+if you make any changes we have to restart config
+[ec2-user@ip-172-31-5-197 ~]$ sudo vi /etc/ssh/sshd_config
+[ec2-user@ip-172-31-5-197 ~]$ sudo systemctl restart sshd
+
+
+[sudo] password for userFeb15:
+[userFeb15@ip-172-31-5-197 ec2-user]$ sudo passwd pratap
+Changing password for user pratap.
+New password:
+BAD PASSWORD: The password is shorter than 8 characters
+Retype new password:
+passwd: all authentication tokens updated successfully.
+[userFeb15@ip-172-31-5-197 ec2-user]$ whoami
+userFeb15
+
+
+
+to configure sudoers file
+[userFeb15@ip-172-31-5-197 ec2-user]$ sudo visudo
+
+
+##
+## Allow root to run any commands anywhere
+root    ALL=(ALL)       ALL
+usernew ALL=(ALL:ALL)     ALL
+userFeb15 ALL=(ALL:ALL)   ALL
+pratap ALL=(ALL:ALL)    ALL
+
+
+To open ssh configuration file
+
+# Explicitly disable PasswordAuthentication. By presetting it, we
+# avoid the cloud-init set_passwords module modifying sshd_config and
+# restarting sshd in the default instance launch configuration.
+PasswordAuthentication no
+PermitEmptyPasswords no
+
+
+[ec2-user@ip-172-31-5-197 ~]$ sudo systemctl restart sshd
+
+to login into EC2 Linux virtual machine, the default user is ec2-user, to make other users to login into the same EC2, we got to enable PasswordAuthentication to yes
+
+
+# Explicitly disable PasswordAuthentication. By presetting it, we
+# avoid the cloud-init set_passwords module modifying sshd_config and
+# restarting sshd in the default instance launch configuration.
+PasswordAuthentication yes
+PermitEmptyPasswords no
+
+then restart: [userFeb15@ip-172-31-5-197 ec2-user]$ sudo systemctl restart sshd
+
+
+Enable password based authentication for user: 
+===> in sshd_config file, by default PasswordAuthentication is set to 'no'
+we may have to enable password based authentication to 'yes'
+
+---> Display the sshd_config file data: sudo cat /etc/ssh/sshd_config
+
+Open sshd config file: sudo vi /etc/ssh/sshd_config
+Note: to enable PasswordAuthentication to yes we may have to go into insert mode ---> i
+
+---> Restart sshd service: sudo systemctl restart sshd
+
+Login into EC2 Linux VM as an other User
+
+Logged into EC2 as '[userFeb15@ip-172-31-5-197 ~]$' userFeb15
+
+---> We usually connect to Linux VM as ec2-user with the help of pem file
+
+can you get connected to Linux VM using other ec2-user? YES
+
+---> to login into ec2 machine without pem file or with a new user : 
+create a new user: sudo useradd john
+update password: sudo passwd john
+configure 'john' in sudoers file: sudo visudo: -> john ALL=(ALL:ALL) ALL -> esc -> ctrl + X + Y + enter
+enable Password based authentication in sshd_config file: sudo vi /etc/ssh/sshd_config then save :wq
+restart sshd service: sudo systemctl restart sshd
+connect to Linux EC2 VM as 'john' user using username and password
+
+
+back to ec2-user
+
+
+[ec2-user@ip-172-31-5-197 ~]$ ls -l
+total 0
+drwxr-xr-x. 2 ec2-user ec2-user 151 Feb  9 22:29 devops
+
+
+if it starts with a 'd' then it is a directory like drwxr-xr-x. 2 ec2-user ec2-user 151 Feb  9 22:29 devops
+'-' means regular file
+
+
+[ec2-user@ip-172-31-5-197 devops]$ ls -l
+total 24
+-rw-r--r--. 1 ec2-user ec2-user  88 Feb  9 02:41 alien.txt
+-rw-r--r--. 1 ec2-user ec2-user  88 Feb  9 02:50 aws.txt
+-rw-r--r--. 1 ec2-user ec2-user 403 Feb  9 04:12 cloud.txt
+-rw-r--r--. 1 ec2-user ec2-user 403 Feb  9 22:21 cloud1.txt
+-rw-r--r--. 1 ec2-user ec2-user 511 Feb  9 23:01 demo.txt
+-rw-r--r--. 1 ec2-user ec2-user   0 Feb  8 22:00 f1.txt
+-rw-r--r--. 1 ec2-user ec2-user   0 Feb  8 22:00 f2.txt
+-rw-r--r--. 1 ec2-user ec2-user   0 Feb  8 21:20 java.txt
+-rw-r--r--. 1 ec2-user ec2-user 113 Feb  9 02:19 python.txt
+
+
+File permissions in Linux:
+-> read => represented by 'r'
+-> write => represented by 'w'
+-> execute => 'x'
+
+In permissions every file will have 3 sections:
+=> user => u (owner)
+=> group => g
+=> other users => o
+
+format user-group-others: 3 options for each so total 9 options example rwx-rwx-rwx this file has ReadWriteExecute options for all 3 of them: users, group and others
+rw- r-- r-- ReadWrite for user, only Read for group and only Read for other users
+r-x --x r-- ReadExecute for user, only Execute for Group and only Read for other users
+rwx r-- r-- ReadWriteExecute for user, only Read for group and only Read for other users
+rw- r-- r-x file.txt => ReadWrite for user, only Read for group and ReadExecute for other users
+
+
+How to change file permissions?
+
+'chmod' command => 
+
+Before:
+[ec2-user@ip-172-31-5-197 devops]$ ls -l
+total 24
+-rw-r--r--. 1 ec2-user ec2-user  88 Feb  9 02:41 alien.txt
+
+[ec2-user@ip-172-31-5-197 devops]$ chmod u+x alien.txt  => i am giving execute permissions to user
+
+After:
+[ec2-user@ip-172-31-5-197 devops]$ ls -l
+total 24
+-rwxr--r--. 1 ec2-user ec2-user  88 Feb  9 02:41 alien.txt
+
+
+[ec2-user@ip-172-31-5-197 devops]$ chmod g+w alien.txt => i am giving write permissions to group
+[ec2-user@ip-172-31-5-197 devops]$ ls -l
+total 24
+-rwxrw-r--. 1 ec2-user ec2-user  88 Feb  9 02:41 alien.txt
+
+
+[ec2-user@ip-172-31-5-197 devops]$ chmod o+x alien.txt
+[ec2-user@ip-172-31-5-197 devops]$ ls -l
+total 24
+-rwxrw-r-x. 1 ec2-user ec2-user  88 Feb  9 02:41 alien.txt
+
+Remove execute for other users
+
+[ec2-user@ip-172-31-5-197 devops]$ chmod o-x alien.txt
+[ec2-user@ip-172-31-5-197 devops]$ ls -l
+total 24
+-rwxrw-r--. 1 ec2-user ec2-user  88 Feb  9 02:41 alien.txt
+
+
+Add write for others o+w
+
+[ec2-user@ip-172-31-5-197 devops]$ chmod o+w alien.txt
+[ec2-user@ip-172-31-5-197 devops]$ ls -l
+total 24
+-rwxrw-rw-. 1 ec2-user ec2-user  88 Feb  9 02:41 alien.txt
+
+Remove all permissions for other users
+
+[ec2-user@ip-172-31-5-197 devops]$ chmod o-rwx alien.txt
+[ec2-user@ip-172-31-5-197 devops]$ ls -l
+total 24
+-rwxrw----. 1 ec2-user ec2-user  88 Feb  9 02:41 alien.txt
+
+Remove all access for other users
+
+[ec2-user@ip-172-31-5-197 devops]$ chmod g-rwx alien.txt
+[ec2-user@ip-172-31-5-197 devops]$ ls -l
+total 24
+-rwx------. 1 ec2-user ec2-user  88 Feb  9 02:41 alien.txt
+
+
+[ec2-user@ip-172-31-5-197 devops]$ chmod g+rwx alien.txt
+[ec2-user@ip-172-31-5-197 devops]$ ls -l
+total 24
+-rwxrwx---. 1 ec2-user ec2-user  88 Feb  9 02:41 alien.txt
+
+
+chmod u+x f1.txt => Gives Execute permission for user
+chmod g+w f1.txt => Gives Write permission for group
+chmod o-x f1.txt => Removes Execute permission for others
+chmod o+w f1.txt => Gives Write permission for others
+chmod o-rwx f1.txt => Removes ReadWriteExecute for others
+chmod g+rwx f1.txt => Gives all permission for group
+
+for two files chmod g+w alien.txt demo.txt
+
+[ec2-user@ip-172-31-5-197 devops]$ chmod u+x cloud.txt demo.txt
+[ec2-user@ip-172-31-5-197 devops]$ ls -l
+total 24
+-rwxrwx---. 1 ec2-user ec2-user  88 Feb  9 02:41 alien.txt
+-rw-r--r--. 1 ec2-user ec2-user  88 Feb  9 02:50 aws.txt
+-rwxr--r--. 1 ec2-user ec2-user 403 Feb  9 04:12 cloud.txt
+-rw-r--r--. 1 ec2-user ec2-user 403 Feb  9 22:21 cloud1.txt
+-rwxr--r--. 1 ec2-user ec2-user 511 Feb  9 23:01 demo.txt
+-rw-r--r--. 1 ec2-user ec2-user   0 Feb  8 22:00 f1.txt
+-rw-r--r--. 1 ec2-user ec2-user   0 Feb  8 22:00 f2.txt
+-rw-r--r--. 1 ec2-user ec2-user   0 Feb  8 21:20 java.txt
+-rw-r--r--. 1 ec2-user ec2-user 113 Feb  9 02:19 python.txt
+
+
+File permissions in Numeric format
+0 -> No permission
+1 -> Execute
+2 -> Write
+3 -> 2+1 (Execute + Write)
+4 -> Read
+5 -> 4+1 (Read + Execute)
+6 -> 4+2 (Read + Write)
+7 -> 6+1 (Read + Write + Execute)
+
+ugo+x -> user group others have execute permission => chmod 111 f1.txt
+ugo+w => user group others have write permission => chmod 222 f1.txt
+ugo+rwx => user group others have all 3 permissions and that's the highest => chmod 777 f1.txt
+
+
+[ec2-user@ip-172-31-5-197 devops]$ chmod 777 alien.txt
+[ec2-user@ip-172-31-5-197 devops]$ ls -l
+total 24
+-rwxrwxrwx. 1 ec2-user ec2-user  88 Feb  9 02:41 alien.txt
+
+
+[ec2-user@ip-172-31-5-197 devops]$ chmod 772 alien.txt
+[ec2-user@ip-172-31-5-197 devops]$ ls -l
+total 24
+-rwxrwx-w-. 1 ec2-user ec2-user  88 Feb  9 02:41 alien.txt
+
+u+r, g+w, d+rx => chmod 425
+
+
+[ec2-user@ip-172-31-5-197 devops]$ chmod 764 alien.txt
+[ec2-user@ip-172-31-5-197 devops]$ ls -l
+total 24
+-rwxrw-r--. 1 ec2-user ec2-user  88 Feb  9 02:41 alien.txt
+
+Question: what's the default permissions for directory file in Linux?
+drwxr-xr-x. 2 ec2-user ec2-user 151 Feb  9 22:29 devops => 755 for directory
+
+What's the default permissions for normal file in Linux?
+-rw-r--r--. 1 ec2-user ec2-user   0 Feb  8 22:00 f1.txt => 644 for normal file
+
+What's the highest permission? 777
+
+
+how to change file or directory ownership?
+change ownership
+chown
+
+current owner of alien.txt is ec2-user
+
+[ec2-user@ip-172-31-5-197 devops]$ sudo chown userFeb15 alien.txt
+[ec2-user@ip-172-31-5-197 devops]$ ls -l
+total 24
+-rwxrw-r--. 1 userFeb15 ec2-user  88 Feb  9 02:41 alien.txt
+
+after changing, owner of alien.txt is userFeb15.txt
+
+
+[ec2-user@ip-172-31-5-197 devops]$ sudo chown :aliens demo.txt
+[ec2-user@ip-172-31-5-197 devops]$ ls -l
+total 24
+-rwxrw-r--. 1 userFeb15 ec2-user  88 Feb  9 02:41 alien.txt
+-rw-r--r--. 1 ec2-user  ec2-user  88 Feb  9 02:50 aws.txt
+-rwxr--r--. 1 ec2-user  ec2-user 403 Feb  9 04:12 cloud.txt
+-rw-r--r--. 1 ec2-user  ec2-user 403 Feb  9 22:21 cloud1.txt
+-rwxr--r--. 1 ec2-user  aliens   511 Feb  9 23:01 demo.txt
+
+
+[ec2-user@ip-172-31-5-197 devops]$ sudo chown userFeb15:userFeb15 alien.txt  (chown user:owner alien.txt)
+[ec2-user@ip-172-31-5-197 devops]$ ls -l
+total 24
+-rwxrw-r--. 1 userFeb15 userFeb15  88 Feb  9 02:41 alien.txt
+
+
+[ec2-user@ip-172-31-5-197 devops]$ sudo chown ec2-user  alien.txt
+[ec2-user@ip-172-31-5-197 devops]$ ls -l
+total 24
+-rwxrw-r--. 1 ec2-user userFeb15  88 Feb  9 02:41 alien.txt
+
+sudo chown <newowner> file/directory => change owner
+sudo chown :<groupname> file/directory => change owner group
+sudo chown <ownername>:<groupname>  => change owner & group owner
+
+
+chmod vs chown:
+chmod: To change file/directory permissions
+chown: To change owner or group
+
+
+We can create multiple users and multiple users can log into the Linux machine
+
+
+How to find and locate? for file location search
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
