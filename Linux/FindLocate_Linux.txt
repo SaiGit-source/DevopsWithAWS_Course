@@ -1,0 +1,202 @@
+FindLocate Linux
+
+They are used for File location search
+
+Locate looks for file in locate DB
+Find looks for files in entire Linux filesystem
+
+[ec2-user@ip-172-31-5-197 devops]$ sudo yum install locate
+
+
+[ec2-user@ip-172-31-5-197 devops]$ find /home/ec2-user -name demo.txt
+/home/ec2-user/devops/demo.txt
+
+[ec2-user@ip-172-31-5-197 ~]$ find /home/ec2-user -name cloud.txt
+/home/ec2-user/devops/cloud.txt
+
+without specifying 'user' is not working
+[ec2-user@ip-172-31-5-197 ~]$ find /home -name cloud.txt
+/home/ec2-user/devops/cloud.txt
+find: ‘/home/user1’: Permission denied
+
+
+it works with sudo
+
+[ec2-user@ip-172-31-5-197 ~]$ sudo find /home -name cloud.txt
+/home/ec2-user/devops/cloud.txt
+
+[ec2-user@ip-172-31-5-197 ~]$ ls -l /home
+total 0
+drwx------. 2 alien1    alien      83 Feb 10 00:27 alien
+drwx------. 4 ec2-user  ec2-user  125 Feb  9 22:15 ec2-user
+drwx------. 2 pratap    pratap     62 Feb 15 21:08 pratap
+drwx------. 2 alien1    alien      83 Feb 10 00:01 user1
+drwx------. 2 alien1    alien      83 Feb 10 00:15 user2
+drwx------. 2 userFeb15 userFeb15  83 Feb 15 20:18 userFeb15
+
+
+find all empty files in /home
+
+[ec2-user@ip-172-31-5-197 ~]$ sudo find /home -type f -empty
+/home/ec2-user/devops/java.txt
+/home/ec2-user/devops/f1.txt
+/home/ec2-user/devops/f2.txt
+
+
+find empty directory
+[ec2-user@ip-172-31-5-197 ~]$ sudo find /home -type d -empty
+/home/ec2-user/newDir
+
+
+Commands:
+install locate: sudo yum install locate
+locate apache -> search for files which contains name='apache'
+sudo find /home -name file.txt --> Search for files which are having name as 'demo'
+sudo find /home -type f -empty ---> Search for empty files inside /home
+sudo find /home -type d -empty ---> Search for empty directories inside /home
+sudo find /home -mmin +60 -delete ---> delete 1 hour old files in Linux
+sudo find /home -mtime 30 -delete ---> delete 30 days files inside home directory
+rm -f *.txt ---> delete all files
+zip <zipName> <content>
+zip <zipfilename> *.txt  ---> Create a zip file with all txt files
+zip -sf <zip filename> --> Display content of zip file
+zip -r <filename.zip> <new file.txt> ---> add new file to existing zip file
+zip -d <filename.zip> <filename.txt> ----> it will delete file.txt from existing zip file
+zip -e <filename.zip> *.txt ---> create a zip file with all txt files with password
+unzip <filename.zip> ---> extract zip file content
+rm filename.zip ---> delete the zip file
+
+
+[ec2-user@ip-172-31-5-197 ~]$ sudo updatedb
+
+[ec2-user@ip-172-31-5-197 ~]$ locate java
+/etc/crypto-policies/back-ends/java.config
+/etc/crypto-policies/back-ends/javasystem.config
+
+
+find files that were created 60min before and delete
+
+[ec2-user@ip-172-31-5-197 ~]$ sudo find /home -mmin +60 -delete
+find: cannot delete ‘/home’: Directory not empty
+
+Working with zip files in Linux
+files archive --> compress
+
+[ec2-user@ip-172-31-5-197 devops]$ zip -v
+
+
+[ec2-user@ip-172-31-5-197 devops]$ zip aliens *.txt
+  adding: alien1.txt (stored 0%)
+  adding: alien2.txt (stored 0%)
+  adding: alien3.txt (stored 0%)
+[ec2-user@ip-172-31-5-197 devops]$ ls
+alien1.txt  alien2.txt  alien3.txt  aliens.zip
+
+Print contents inside the zip file
+[ec2-user@ip-172-31-5-197 devops]$ zip -sf aliens.zip
+Archive contains:
+  alien1.txt
+  alien2.txt
+  alien3.txt
+Total 3 entries (0 bytes)
+
+
+[ec2-user@ip-172-31-5-197 devops]$ touch alien4.txt
+[ec2-user@ip-172-31-5-197 devops]$ ls -l
+total 4
+-rw-r--r--. 1 ec2-user ec2-user   0 Feb 16 20:37 alien1.txt
+-rw-r--r--. 1 ec2-user ec2-user   0 Feb 16 20:37 alien2.txt
+-rw-r--r--. 1 ec2-user ec2-user   0 Feb 16 20:37 alien3.txt
+-rw-r--r--. 1 ec2-user ec2-user   0 Feb 16 20:43 alien4.txt
+-rw-r--r--. 1 ec2-user ec2-user 466 Feb 16 20:38 aliens.zip
+[ec2-user@ip-172-31-5-197 devops]$
+
+
+to add new file into existing zip file
+
+i have added the new file into aliens.zip 
+
+[ec2-user@ip-172-31-5-197 devops]$ zip -r aliens.zip alien4.txt
+  adding: alien4.txt (stored 0%)
+[ec2-user@ip-172-31-5-197 devops]$ zip -sf aliens.zip
+Archive contains:
+  alien1.txt
+  alien2.txt
+  alien3.txt
+  alien4.txt
+Total 4 entries (0 bytes)
+
+
+delete a file from zip file
+[ec2-user@ip-172-31-5-197 devops]$ zip -d aliens.zip alien4.txt
+deleting: alien4.txt
+[ec2-user@ip-172-31-5-197 devops]$ zip -sf aliens.zip
+Archive contains:
+  alien1.txt
+  alien2.txt
+  alien3.txt
+Total 3 entries (0 bytes)
+
+
+create zip file with password
+[ec2-user@ip-172-31-5-197 devops]$ zip -e alienPasswd *.txt
+Enter password:
+Verify password:
+  adding: alien1.txt (stored 0%)
+  adding: alien2.txt (stored 0%)
+  adding: alien3.txt (stored 0%)
+  adding: alien4.txt (stored 0%)
+
+Unzip files
+[ec2-user@ip-172-31-5-197 devops]$ unzip alienPasswd.zip
+Archive:  alienPasswd.zip
+[alienPasswd.zip] alien1.txt password:
+password incorrect--reenter:
+replace alien1.txt? [y]es, [n]o, [A]ll, [N]one, [r]ename: no
+replace alien2.txt? [y]es, [n]o, [A]ll, [N]one, [r]ename: no
+replace alien3.txt? [y]es, [n]o, [A]ll, [N]one, [r]ename: no
+replace alien4.txt? [y]es, [n]o, [A]ll, [N]one, [r]ename: no
+
+
+Networking commands:
+ping, wget, curl, ipconfig
+
+[ec2-user@ip-172-31-5-197 devops]$ ping www.google.com
+
+wget is used to download files from internet
+
+Open Apache Tomcat: https://tomcat.apache.org/download-90.cgi
+copy link address: https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.99/bin/apache-tomcat-9.0.99.zip
+
+[ec2-user@ip-172-31-5-197 devops]$ wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.99/bin/apache-tomcat-9.0.99.zip
+--2025-02-17 03:10:41--  https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.99/bin/apache-tomcat-9.0.99.zip
+Resolving dlcdn.apache.org (dlcdn.apache.org)... 151.101.2.132, 2a04:4e42::644
+Connecting to dlcdn.apache.org (dlcdn.apache.org)|151.101.2.132|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 13314737 (13M) [application/zip]
+Saving to: ‘apache-tomcat-9.0.99.zip’
+
+apache-tomcat-9.0.99.zip         100%[==========================================================>]  12.70M  42.0MB/s    in 0.3s
+
+2025-02-17 03:10:43 (42.0 MB/s) - ‘apache-tomcat-9.0.99.zip’ saved [13314737/13314737]
+
+it downloaded
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+

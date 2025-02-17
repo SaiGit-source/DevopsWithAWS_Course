@@ -1,0 +1,281 @@
+Networking commands:
+ping, wget, curl, ifconfig
+
+[ec2-user@ip-172-31-5-197 devops]$ ping www.google.com
+
+wget is used to download files from internet
+
+Open Apache Tomcat: https://tomcat.apache.org/download-90.cgi
+copy link address: https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.99/bin/apache-tomcat-9.0.99.zip
+
+[ec2-user@ip-172-31-5-197 devops]$ wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.99/bin/apache-tomcat-9.0.99.zip
+--2025-02-17 03:10:41--  https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.99/bin/apache-tomcat-9.0.99.zip
+Resolving dlcdn.apache.org (dlcdn.apache.org)... 151.101.2.132, 2a04:4e42::644
+Connecting to dlcdn.apache.org (dlcdn.apache.org)|151.101.2.132|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 13314737 (13M) [application/zip]
+Saving to: ‘apache-tomcat-9.0.99.zip’
+
+apache-tomcat-9.0.99.zip         100%[==========================================================>]  12.70M  42.0MB/s    in 0.3s
+
+2025-02-17 03:10:43 (42.0 MB/s) - ‘apache-tomcat-9.0.99.zip’ saved [13314737/13314737]
+
+it downloaded
+
+curl command: https://www.api-ninjas.com/api/quotes
+
+curl is to make a call to the API, send http requests to server and get response
+
+example command
+[ec2-user@ihttps://openlibrary.org/people/mekBot/books/want-to-read.jsonekBot/books/want-to-read.json
+{"page": 1, "numFound": 369, "reading_log_entries": [{"work": {"title": "The Food Lab", "key": "/works/OL18146664W", "author_keys": ["/authors/OL7442728A"], "author_names"
+
+
+[ec2-user@ip-172-31-5-197 devops]$ curl https://fakerapi.it/api/v2/addresses?_quantity=1
+{"status":"OK","code":200,"locale":"en_US","seed":null,"total":1,"data":[{"id":1,"street":"55819 Manuel Lodge","streetName":"Thiel Village","buildingNumber":"5376","city":"Port Easterville","zipcode":"27459","country":"Czechia","country_code":"CZ","latitude":64.111211,"longitude":64.249337}]}[ec2-user@ip-172-31-5-197 devops]$
+
+ifconfig: 
+[ec2-user@ip-172-31-5-197 devops]$ ifconfig
+enX0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 9001
+        inet 172.31.5.197  netmask 255.255.240.0  broadcast 172.31.15.255
+
+free --> Display memory level details
+top ---> it will display all Running processes
+htop ---> Display all running processes in Table format 
+sudo yum install htop
+
+[ec2-user@ip-172-31-5-197 devops]$ free
+               total        used        free      shared  buff/cache   available
+Mem:          972252      165792      486472         448      319988      658172
+Swap:              0           0           0
+memory details how much is free etc
+
+[ec2-user@ip-172-31-5-197 devops]$ top
+top - 03:37:00 up  7:26,  1 user,  load average: 0.00, 0.00, 0.00
+Tasks:  99 total,   1 running,  98 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  0.0 us,  0.0 sy,  0.0 ni, 98.0 id,  0.0 wa,  0.0 hi,  0.0 si,  2.0 st
+MiB Mem :    949.5 total,    474.8 free,    161.9 used,    312.7 buff/cache
+MiB Swap:      0.0 total,      0.0 free,      0.0 used.    642.7 avail Mem
+
+    PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND
+  43580 ec2-user  20   0  223916   3364   2700 R   0.3   0.3   0:00.01 top
+      1 root      20   0  106228  17280  10460 S   0.0   1.8   0:01.89 systemd
+      2 root      20   0       0      0      0 S   0.0   0.0   0:00.00 kthreadd
+
+
+
+Abstract window toolkit
+AWK command: versatile text processing tool in Linux
+	     It allows to manipulate and extract data from text files specially in structured text files which in a columnar format
+	     Takes input, processes it line by line and performs actions based on some rules and patterns
+Syntax: awk 'pattern {action}' file.. pattern what action you want to take on a file
+
+[ec2-user@ip-172-31-5-197 devops]$ cat > employee.txt
+Abc     manager         account         456453
+Pqr     lead            media           454645
+Xyz     manager         tech            453234
+Ijk     manager         support         236743
+[ec2-user@ip-172-31-5-197 devops]$ cat employee.txt
+Abc     manager         account         456453
+Pqr     lead            media           454645
+Xyz     manager         tech            453234
+Ijk     manager         support         236743
+
+
+prints all data in the file
+
+[ec2-user@ip-172-31-5-197 devops]$ awk '{print}' employee.txt
+Abc     manager         account         456453
+Pqr     lead            media           454645
+Xyz     manager         tech            453234
+Ijk     manager         support         236743
+
+i want to print only managers in this file
+[ec2-user@ip-172-31-5-197 devops]$ awk '/manager'/{print} employee.txt
+Abc     manager         account         456453
+Xyz     manager         tech            453234
+Ijk     manager         support         236743
+
+
+print only 1st and 4th columns
+[ec2-user@ip-172-31-5-197 devops]$ awk '{print $1,$4}' employee.txt
+Abc 456453
+Pqr 454645
+Xyz 453234
+Ijk 236743
+
+
+[ec2-user@ip-172-31-5-197 devops]$ awk '{print NR, $0}' employee.txt
+1 Abc   manager         account         456453
+2 Pqr   lead            media           454645
+3 Xyz   manager         tech            453234
+4 Ijk   manager         support         236743
+
+
+print number 1st column
+[ec2-user@ip-172-31-5-197 devops]$ awk '{print NR, "-" $1}' employee.txt
+1 -Abc
+2 -Pqr
+3 -Xyz
+4 -Ijk
+
+iNode number: unique number (1281461) is assigned in Linux when we create a file. Linux will use this iNode number to map our files with its name and in Linux database internally
+[ec2-user@ip-172-31-5-197 devops]$ ls -li
+total 13016
+1281458 -rw-r--r--. 1 ec2-user ec2-user        0 Feb 16 20:37 alien1.txt
+1281459 -rw-r--r--. 1 ec2-user ec2-user        0 Feb 16 20:37 alien2.txt
+1281460 -rw-r--r--. 1 ec2-user ec2-user        0 Feb 16 20:37 alien3.txt
+1281461 -rw-r--r--. 1 ec2-user ec2-user        0 Feb 16 20:43 alien4.txt
+
+inode number in Linux: unique number assigned to every file in Linux, Linux uses inode number to map our files with its name in the Linux internal database, ls -li to check inode number of files
+
+Link files in Linux:
+similar to shortcut files in Windows, in Linux we can create Link files. two kinds: hardlink and softlink: 
+Hardlink: if we delete data (original file), then shortcut file will not be affected. Both original file and shortcut file will have the same inode number. 
+
+command to create Link is ln
+it is hardlink
+[ec2-user@ip-172-31-5-197 devops]$ ln employee.txt employee_shortcut.txt
+[ec2-user@ip-172-31-5-197 devops]$ ls -li
+total 13020
+1281416 -rw-r--r--. 2 ec2-user ec2-user      108 Feb 17 04:16 employee.txt
+1281416 -rw-r--r--. 2 ec2-user ec2-user      108 Feb 17 04:16 employee_shortcut.txt
+1281420 -rw-r--r--. 1 ec2-user ec2-user        0 Feb 17 04:23 services.txt
+
+same inode number 1281416
+
+also same content 
+
+[ec2-user@ip-172-31-5-197 devops]$ cat employee_shortcut.txt
+Abc     manager         account         456453
+Pqr     lead            media           454645
+Xyz     manager         tech            453234
+Ijk     manager         support         236743
+
+
+[ec2-user@ip-172-31-5-197 devops]$ ln f1.txt f1_shortcut.txt
+[ec2-user@ip-172-31-5-197 devops]$ cat f1_shortcut.txt
+new data added in f1.txt
+
+
+i will remove f1.txt but f1_shortcut will remain
+
+[ec2-user@ip-172-31-5-197 devops]$ ls -li
+total 13028
+1281416 -rw-r--r--. 2 ec2-user ec2-user      108 Feb 17 04:16 employee.txt
+1281416 -rw-r--r--. 2 ec2-user ec2-user      108 Feb 17 04:16 employee_shortcut.txt
+1281428 -rw-r--r--. 2 ec2-user ec2-user       25 Feb 17 04:44 f1_shortcut.txt
+
+f1.txt is gone but f1_shortcut.txt is still there
+
+Hardlink: ln <originalFile> <link-file> ---> ln f1.txt f1_shortcut.txt. f1_shortcut.txt is the Hardlink for f1.txt
+Check using ls -li
+if data is added to main file, same data will be available in the Link file as well. Hardlink doesn't get deleted
+
+[ec2-user@ip-172-31-5-197 devops]$ cat f1_shortcut.txt
+new data added in f1.txt
+
+
+Softlink:
+[ec2-user@ip-172-31-5-197 devops]$ ln -s employee.txt emp_shortcut.txt
+[ec2-user@ip-172-31-5-197 devops]$ ls -li
+total 13028
+1281439 lrwxrwxrwx. 1 ec2-user ec2-user       12 Feb 17 04:50 emp_shortcut.txt -> employee.txt
+1281416 -rw-r--r--. 2 ec2-user ec2-user      108 Feb 17 04:16 employee.txt
+
+please note the inode for employee and emp_shortcut is different
+
+added new data into employee.txt after creating the shortcut
+[ec2-user@ip-172-31-5-197 devops]$ cat >> employee.txt
+New     manager         devops          327837
+
+
+[ec2-user@ip-172-31-5-197 devops]$ cat emp_shortcut.txt
+Abc     manager         account         456453
+Pqr     lead            media           454645
+Xyz     manager         tech            453234
+Ijk     manager         support         236743
+New     manager         devops          327837
+
+the new data can be seen in the Softlink also similar to Hardlink
+
+[ec2-user@ip-172-31-5-197 devops]$ cat >> f2.txt
+this is f2 file!!!! added new data
+[ec2-user@ip-172-31-5-197 devops]$ cat f2.txt
+this is f2 file!!!! added new data
+[ec2-user@ip-172-31-5-197 devops]$ ln -s f2.txt f2_soft_shortcut.txt
+[ec2-user@ip-172-31-5-197 devops]$ cat f2_soft_shortcut.txt
+this is f2 file!!!! added new data
+[ec2-user@ip-172-31-5-197 devops]$ rm f2.txt
+[ec2-user@ip-172-31-5-197 devops]$ cat f2_soft_shortcut.txt
+cat: f2_soft_shortcut.txt: No such file or directory
+[ec2-user@ip-172-31-5-197 devops]$
+
+when i remove the original file f2.txt, the shortcut is also gone in case of Softlink
+
+[ec2-user@ip-172-31-5-197 devops]$ ls -l
+total 13036
+-rw-r--r--. 1 ec2-user ec2-user       29 Feb 17 04:54 f2_shortcut.txt
+lrwxrwxrwx. 1 ec2-user ec2-user        6 Feb 17 04:58 f2_soft_shortcut.txt -> f2.txt
+
+ln -s <originalfile> <softlink file> ----> Softlink is like a shortcut link in Windows, if we delete original file then shortcut link file will also be deleted, Both of the files will have different inode numbers, changes in original file will be affected in the new Softlink file as well
+
+How to check Linux kernel version ----> uname -r
+
+[ec2-user@ip-172-31-5-197 devops]$ uname -r
+6.1.127-135.201.amzn2023.x86_64
+
+
+How to check Linux version ---> cat /etc/os-release
+
+[ec2-user@ip-172-31-5-197 devops]$ cat /etc/os-release
+NAME="Amazon Linux"
+VERSION="2023"
+ID="amzn"
+ID_LIKE="fedora"
+
+
+Echo command
+[ec2-user@ip-172-31-5-197 devops]$ echo "Hello" > f2.txt
+[ec2-user@ip-172-31-5-197 devops]$ cat f2.txt
+Hello
+
+here it will redirect output to a file
+
+netstat will give all Networking information in Linux
+
+
+ps aux --> running process list in Linux
+kill <PID> ---> kill running process
+netstat ---> networking related information
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

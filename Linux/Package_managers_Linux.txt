@@ -1,0 +1,20 @@
+Package managers in Linux
+
+How do we install say Java on Windows OS? we will use GUI to install Java
+
+[ec2-user@ip-172-31-5-197 devops]$ sudo yum install git  --> install git in Amazon Linux
+
+package managers are used to install or update software in Linux machines
+
+[ec2-user@ip-172-31-5-197 devops]$ git -v
+git version 2.47.1
+
+
+sudo yum install java  ---> install java in Amazon Linux
+
+Package managers are used to install / update / manage Software packages in Linux machines
+These package managers are specific to Linux distribution
+
+Amazon Linux/Redhat/CentOs: yum
+Debian/Ubuntu: apt
+
