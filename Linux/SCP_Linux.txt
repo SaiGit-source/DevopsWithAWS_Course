@@ -1,0 +1,103 @@
+SCP -> 
+
+Say you have created multiple machines on AWS. can you access them physically? No
+
+I want to copy files between virtual machines
+
+VM1 copy files into -> VM2
+
+Thats where Secure Copy Protocol (SCP) comes into picture. 
+
+Source -> Destination
+
+In MobaXTerm, there is an option to upload -> upload KeyPair.pem file
+
+[ec2-user@ip-172-31-13-80 ~]$ pwd
+/home/ec2-user
+[ec2-user@ip-172-31-13-80 ~]$ ls -l
+total 8
+-rw-r--r--. 1 ec2-user ec2-user   52 Feb 22 21:45 alien.txt
+-rw-r--r--. 1 ec2-user ec2-user 1674 Feb 22 21:59 devops_linux.pem
+
+currently pem file has readwrite - read - read access only
+
+to change, i will use chmod
+
+only read access to user:
+
+[ec2-user@ip-172-31-13-80 ~]$ chmod 400 devops_linux.pem
+[ec2-user@ip-172-31-13-80 ~]$ ls -l
+total 8
+-rw-r--r--. 1 ec2-user ec2-user   52 Feb 22 21:45 alien.txt
+-r--------. 1 ec2-user ec2-user 1674 Feb 22 21:59 devops_linux.pem
+
+Execute SCP command:
+
+scp -i <keypair> <filename.txt> <user_destination>@<destination_ip>:/<dest_path>
+ 
+[ec2-user@ip-172-31-13-80 ~]$ sudo scp -i devops_linux.pem alien.txt ec2-user@35.183.45.115:/home/ec2-user
+The authenticity of host '35.183.45.115 (35.183.45.115)' can't be established.
+ED25519 key fingerprint is SHA256:o1M4x3F4xwBID6rAOup7QmGy+S1sDpREMOQ02aKsaKM.
+This key is not known by any other names
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '35.183.45.115' (ED25519) to the list of known hosts.
+alien.txt  
+
+
+now we got alien.txt in destination
+
+[ec2-user@ip-172-31-6-153 ~]$ ls -l
+total 4
+-rw-r--r--. 1 ec2-user ec2-user 52 Feb 22 22:13 alien.txt
+
+scp -i <pem-file> <source-file-path> username@dest-vm-public-ip:/dest/path
+
+how to change the hostname? sudo hostname newhost
+
+
+[ec2-user@ip-172-31-6-153 ~]$ sudo hostname newhost
+
+exit
+then restart
+
+now we have the new hostname: [ec2-user@newhost ~]$
+
+sudo hostname <newname> -> set hostname
+exit
+restart -> press R
+
+
+
+Summary of Linux commands so far:
+1. File-based operations
+2. Text editors
+3. Text filters
+4. User management
+5. File permissions
+6. File ownership
+7. Archives
+8. Networking
+9. Sudoers files
+10. sshd_config
+11. package managers
+12. static web hosting httpd
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

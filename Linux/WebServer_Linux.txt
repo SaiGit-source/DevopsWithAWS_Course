@@ -1,0 +1,147 @@
+Shell Scripting - Linux
+
+
+Package manager for Amazon Linux: yum
+
+Package manager for Ubuntu: apt
+
+
+How to install webserver in Linux VM?
+
+If you keep your software in there, then it is a server machine
+
+keeping our application into server software is called as deployment
+
+i want to host a static website: can i host directly? you have to make Linux as a server machine first. static website means such a website whose content will be same for every user
+
+Webserver: software which is used to run websites. keeping our software application in the server software so everyone around the globe can access our application
+
+how to make Linux as a server machine: i have to install server software
+
+1. enable 80 port number in security group inbound rules
+2. go into security configurations: Type: SSH Port range 22, second is HTTP -> source Any IPv4, port range 80
+
+we got to enable both SSH and HTTP
+
+Second option
+other option is to create a new EC2 instance -> check Allow SSH traffic from Anywhere
+Allow HTTP traffic from internet -> opening up 80 port number
+Launch instance
+
+we are using 'httpd' as webserver in Amazon Linux virtual machine
+
+install webserver: [ec2-user@ip-172-31-6-153 ~]$ sudo yum install httpd
+keeping website into server thats like deploying website
+
+[ec2-user@ip-172-31-6-153 ~]$ sudo service httpd start
+
+
+once it starts, copy public IP and paste it in a browser -> it prints "It works!"
+
+[ec2-user@ip-172-31-6-153 ~]$ cd /var/www/html
+[ec2-user@ip-172-31-6-153 html]$ pwd
+/var/www/html
+
+i want to add my own custom content
+
+[ec2-user@ip-172-31-6-153 html]$ sudo vi index.html
+[ec2-user@ip-172-31-6-153 html]$ sudo vi index.html
+
+press 'i' to insert
+<h1> Hello Aliens! Welcome to DevOps course </h1>
+
+
+
+~
+~
+ESC -> :wq to save and exit
+
+now i get this new message in the public IP in the browser: "Hello Aliens! Welcome to DevOps course"
+
+sudo yum install httpd
+sudo service httpd start
+cd /var/www/html
+sudo vi index.html
+
+
+Systemctl in Linux:
+
+if you want to manage System services, we are going with this. it is part of service manager, starting service, stopping service, enabling or disabling service
+if you want to go with any of the services, we have to go with systemctl command
+
+
+[ec2-user@ip-172-31-6-153 html]$ systemctl status httpd
+● httpd.service - The Apache HTTP Server
+     Loaded: loaded (/usr/lib/systemd/system/httpd.service; disabled; preset: disabled)
+     Active: active (running) since Sat 2025-02-22 17:36:32 UTC; 2h 6min ago
+       Docs: man:httpd.service(8)
+   Main PID: 26663 (httpd)
+     Status: "Total requests: 62; Idle/Busy workers 100/0;Requests/sec: 0.00815; Bytes served/sec:   5 B/sec"
+      Tasks: 177 (limit: 1111)
+     Memory: 14.0M
+        CPU: 4.532s
+     CGroup: /system.slice/httpd.service
+             ├─26663 /usr/sbin/httpd -DFOREGROUND
+             ├─26664 /usr/sbin/httpd -DFOREGROUND
+             ├─26665 /usr/sbin/httpd -DFOREGROUND
+             ├─26666 /usr/sbin/httpd -DFOREGROUND
+             └─26667 /usr/sbin/httpd -DFOREGROUND
+
+Apache Http Server
+Some of the common tasks that systemctl can perform -> 
+	starting service
+	stopping service
+	reload services
+	restart services
+	enable/disable any services
+	
+
+[ec2-user@ip-172-31-6-153 html]$ sudo systemctl stop httpd
+
+
+List all active services
+
+[ec2-user@ip-172-31-6-153 html]$ systemctl list-units --type=service
+
+to start Docker: sudo service docker start
+sudo systemctl enable jenkins
+
+Start a service: systemctl start <service-name>
+Stop a service: systemctl stop <service-name>
+Restart a service: systemctl restart <service-name>
+Reload config file for a service without stopping it: systemctl reload <service-name>
+Enable a service to start automatically at boottime: systemctl enable <service-name>
+Disable a service to automatically at boot: systemctl disable <service-name>
+Current status of a service: systemctl status <service-name>
+List all active services: systemctl list-units --type=service
+
+Say you have created multiple machines on AWS. can you access them physically? No
+
+I want to copy files between virtual machines
+
+VM1 copy files into -> VM2
+
+Thats where Secure Copy Protocol (SCP) comes into picture. 
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,98 @@
+Scripting:
+
+i write some series of commands, which i execute on a regular basis on a new machine when i log-in like
+whoami
+pwd
+date
+ls -l
+cal
+
+these are like a group of commands that we use on a daily basis
+
+instead of writing the same set of commands again and again very often, we can keep all of them in a file and executing. instead of writing all commands again and again, we execute the file
+
+Set of commands we save in a file for execution
+
+Scripting is used to automate our daily routine work. repeated work
+
+Instead of executing these commands one after the other manually, we can keep inside a file and execute that file -> this process is referred as Scripting
+
+What's Shell scripting:
+Process of executing the script file using Shell is called as "Shell scripting" ==> it will automate the usual or regular task in a project
+
+we create shell script file with .sh extension.
+
+currently which shell are we using? Bash is the default shell we are using
+
+[ec2-user@newhost ~]$ echo $SHELL
+/bin/bash
+
+there are many shells available
+[ec2-user@newhost ~]$ cat /etc/shells
+/bin/sh
+/bin/bash
+/usr/bin/sh
+/usr/bin/bash
+/bin/csh
+/bin/tcsh
+/usr/bin/csh
+/usr/bin/tcsh
+[ec2-user@newhost ~]$
+
+however, which is the default and mostly used shell out of all? is Bash
+
+lets create a .sh file
+
+[ec2-user@newhost ~]$ vi first-script.sh
+
+write the following commands?
+whoami
+date
+pwd
+ls -l
+
+[ec2-user@newhost ~]$ cat first-script.sh
+whoami
+date
+pwd
+ls -l
+
+
+to execute the .sh file we use sh <file-name.sh>
+
+[ec2-user@newhost ~]$ sh first-script.sh
+ec2-user
+Sun Feb 23 02:54:41 UTC 2025
+/home/ec2-user
+total 8
+-rw-r--r--. 1 ec2-user ec2-user 52 Feb 22 22:13 alien.txt
+-rw-r--r--. 1 ec2-user ec2-user 25 Feb 23 02:54 first-script.sh
+
+How Scripting is different from Programming?
+When we write code, we usually use Compilers, Interpreters to convert into machine understandable format. If it is a Java program, we have to compile into byte-code then convert into machine understandable format then give it to processor
+
+Scripting: no compilation, no interpretation, directly executing in OS. Shell converts scripts into Kernel understandable format, then Kernel converts it into machine hardware understandable format
+
+that's why they are different
+
+Commands:
+vi first-script.sh
+i then write commands
+ESC -> :wq
+cat first-script.sh
+sh first-script.sh
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

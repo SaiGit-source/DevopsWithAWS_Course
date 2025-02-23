@@ -1,0 +1,30 @@
+Linux architecture:
+
+Linux is CLI based free and open source OS
+It is secured
+It is multi-user based OS
+Highly recommended for project related servers (docker, Jenkins, k8s, nexus, sonar, webservers..)
+
+
+3 components in architecture:
+1. Hardware -> actual hardware that will execute everything and anything like Processor
+2. Kernel -> next level is kernel
+3. Shell -> last level
+
+
+
+hardware -> encapsulated by Kernel -> encapsulated by Shell -> encapsulated by application or user
+
+Shell -> is like a mediator between user and kernel. it is the one to process our commands. we are trying to write commands for the kernel. 
+Kernel -> Program which read shell commands and gives to hardware
+
+=> when we execute any Linux command, Shell will read our commands and translate our command into Kernel understandable format
+=> Kernel software will convert our commands into Linux machine hardware understandable format
+
+
+
+
+
+
+
+
