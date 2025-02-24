@@ -1,0 +1,580 @@
+Shell Scripting class 2
+
+we will cover:
+variables, operators, functions, if-else, loops
+
+
+sha-bang in Linux:
+
+lots of Shells available to write shell scripts. Sha-bang is used to specify which shell we should be using to process script file
+
+Writing sha-bang is recommended but not compulsory
+
+#! /bin/bash this is the sha-bang for our shell bash
+
+
+[ec2-user@ip-172-31-13-80 ~]$ vi 01-script.sh
+
+
+#! /bin/bash
+echo "Enter your name"
+read UNAME
+echo "Hello $UNAME! Welcome to DevOps world!"
+~
+
+
+[ec2-user@ip-172-31-13-80 ~]$ cat 01-script.sh
+#! /bin/bash
+echo "Enter your name"
+read UNAME
+echo "Hello $UNAME! Welcome to DevOps world!"
+
+
+
+[ec2-user@ip-172-31-13-80 ~]$ sh 01-script.sh
+Enter your name
+Abc
+Hello Abc! Welcome to DevOps world!
+[ec2-user@ip-172-31-13-80 ~]$
+
+
+[ec2-user@ip-172-31-13-80 ~]$ cat 02-script.sh
+#! /bin/bash
+echo "Enter first name"
+
+read FNAME
+
+echo "Enter last name"
+
+read LNAME
+
+echo "Your fullname is:  $FNAME $LNAME!"
+
+
+
+[ec2-user@ip-172-31-13-80 ~]$ sh 02-script.sh
+Enter first name
+Abc
+Enter last name
+Xyz
+Your fullname is:  Abc Xyz!
+
+
+Variable: to store information, data, or value
+variables will represent data in key: value format
+id: 4,
+name: Abc
+age: 18
+
+
+in Shell scripting, we dont have datatypes
+
+System variables / Environment variables, User-defined variables
+
+variables that are pre-defined and used by System is referred as "System variables"
+
+echo $SHELL
+echo $USER
+echo $PATH
+
+=> Variables, which are created as per requirement of script is defined as "User-defined variables"
+
+To access and print data of variables created, following syntax will be used
+
+echo $<VARIABLE-NAME> --> echo $FNAME
+
+we can access all environmental variables using 'env' command
+
+[ec2-user@ip-172-31-13-80 ~]$ env
+SHELL=/bin/bash
+HISTCONTROL=ignoredups
+SYSTEMD_COLORS=false
+HISTSIZE=1000
+HOSTNAME=ip-172-31-13-80.ca-central-1.compute.internal
+PWD=/home/ec2-user
+
+
+How to set values to variables?
+export COURSE=DevOpsWithAWS
+
+
+[ec2-user@ip-172-31-13-80 ~]$ export COURSE=DevOpsWithAWS
+[ec2-user@ip-172-31-13-80 ~]$ echo $COURSE
+DevOpsWithAWS
+
+unset <variable-name> --> Unset value from variable
+Erase data in variable COURSE
+[ec2-user@ip-172-31-13-80 ~]$ unset COURSE
+[ec2-user@ip-172-31-13-80 ~]$
+[ec2-user@ip-172-31-13-80 ~]$ echo $COURSE
+
+However, variables are stored only temporarily here
+
+how to store variables permanently?
+we cannot use export command create a variable to store the value permanently 
+.bashrc file comes into picture. we got to access and store value of variables if required permanently
+any file starting with a '.' is considered as a hidden file
+
+Access all hidden files ls -la
+[ec2-user@ip-172-31-13-80 ~]$ ls -la
+total 36
+drwx------. 3 ec2-user ec2-user  192 Feb 23 17:58 .
+drwxr-xr-x. 3 root     root       22 Feb 22 21:44 ..
+-rw-------. 1 ec2-user ec2-user  147 Feb 22 22:19 .bash_history
+-rw-r--r--. 1 ec2-user ec2-user   18 Jan 28  2023 .bash_logout
+-rw-r--r--. 1 ec2-user ec2-user  141 Jan 28  2023 .bash_profile
+-rw-r--r--. 1 ec2-user ec2-user  492 Jan 28  2023 .bashrc
+drwx------. 2 ec2-user ec2-user   29 Feb 22 21:44 .ssh
+-rw-------. 1 ec2-user ec2-user 1212 Feb 23 17:58 .viminfo
+-rw-r--r--. 1 ec2-user ec2-user   93 Feb 23 17:54 01-script.sh
+-rw-r--r--. 1 ec2-user ec2-user  128 Feb 23 17:58 02-script.sh
+-rw-r--r--. 1 ec2-user ec2-user   52 Feb 22 21:45 alien.txt
+-r--------. 1 ec2-user ec2-user 1674 Feb 22 21:59 devops_linux.pem
+
+
+
+[ec2-user@ip-172-31-13-80 ~]$ cat .bashrc
+# .bashrc
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+        . /etc/bashrc
+fi
+
+open .bashrc and add the variable we want only in the end of the file
+
+[ec2-user@ip-172-31-13-80 ~]$ vi .bashrc
+
+
+add in the end of the file
+
+[ec2-user@ip-172-31-13-80 ~]$ cat .bashrc
+"
+unset rc
+
+INSTRUCTOR=Abc
+COURSE=Gen AI
+"
+
+Execute .bashrc file first
+[ec2-user@ip-172-31-13-80 ~]$ source .bashrc
+
+
+[ec2-user@ip-172-31-13-80 ~]$ source .bashrc
+[ec2-user@ip-172-31-13-80 ~]$ echo $INSTRUCTOR
+Abc
+[ec2-user@ip-172-31-13-80 ~]$ echo $COURSE
+Gen-AI
+
+
+We use .bashrc file to set variable data permanently for the user
+Every user will have their own .bashrc file
+To see all hidden files, --> ls -la
+To see content of .bashrc file ---> cat .bashrc
+Open .bashrc file for editing ----> vi .bashrc
+Add new variables to the end of file ---> INSTRUCTOR=Abc
+to execute the new .bashrc changes ---> source .bashrc 
+To access the data of those variables ---> echo $INSTRUCTOR
+					   echo $COURSE
+
+how many .bashrc files will be there? one .bashrc file per one user. depends on users
+for all the users, can i set common variables? yes profile file /etc/profile
+
+To set common variables --> we need profile files
+
+[ec2-user@ip-172-31-13-80 ~]$ cat /etc/profile
+# /etc/profile
+
+# System wide environment and startup programs, for login setup
+# Functions and aliases go in /etc/bashrc
+
+# It's NOT a good idea to change this file unless you know what you
+# are doing. It's much better to create a custom.sh shell script in
+# /etc/profile.d/ to make custom changes to your environment, as this
+# will prevent the need for merging in future updates.
+
+Setting variables for all users in Linux --> cat /etc/profile. if any variable data has to be common for all users of Linux virtual machine then we may have to add those variables within profile file
+Rules to work with variable ---> variable name must not start with digits, it should not have special characters like *,@,#,$, 
+NOTE: It is highly recommended to use UPPER CASE for variables in Linux 
+
+*** Create a script file to add 2 numbers.
+
+[ec2-user@ip-172-31-13-80 ~]$ vi 03-script.sh
+[ec2-user@ip-172-31-13-80 ~]$ cat 03-script.sh
+#! /bin/bash
+
+echo "Enter first number to add: "
+
+read FNUM
+
+echo "Enter second number to add: "
+
+read SNUM
+
+echo "Result of sum: $FNUM + $SNUM"
+
+
+[ec2-user@ip-172-31-13-80 ~]$ sh 03-script.sh
+Enter first number to add:
+5
+Enter second number to add:
+3
+Result of sum: 5 + 3
+
+It will not perform addition directly here, so we need to learn about Operators
+
+Modified file
+
+
+#! /bin/bash
+
+echo "Enter first number to add: "
+
+read FNUM
+
+echo "Enter second number to add: "
+
+read SNUM
+
+echo "Result of sum: $((FNUM + SNUM))"
+
+
+[ec2-user@ip-172-31-13-80 ~]$ sh 03-script.sh
+Enter first number to add:
+5
+Enter second number to add:
+3
+Result of sum: 8
+
+Operator: Operators are used to perform operations on variables/data
+Arithmetic operations: 
+Addition $((num1+num2))
+Subtract $((num1-num2))
+Multiplication $((num1*num2))
+Division $((num1/num2))
+Modulo $((num1%num2))
+
+
+Comparison operators:
+Greater than >
+Less than <
+Equal ==
+Not equal !=
+
+Conditional statements: if you want to execute certain commands based on conditions that's referred as Conditional statement
+if [condition1] : then
+	// statements
+elif [condition2]
+	// statements
+else
+	//statements
+fi // to end IF condition
+
+
+[ec2-user@ip-172-31-13-80 ~]$ vi 04-script.sh
+[ec2-user@ip-172-31-13-80 ~]$ cat 04-script.sh
+#! /bin/bash
+
+echo "Enter first number: "
+
+read NUM1
+
+echo "Enter second number: "
+
+read NUM2
+
+if [ $NUM1 -eq $NUM2 ]; then
+        echo "Numbers are equal"
+else
+        echo "Numbers are not equal"
+
+fi
+
+[ec2-user@ip-172-31-13-80 ~]$ sh 04-script.sh
+Enter first number:
+5
+Enter second number:
+5
+Numbers are equal
+
+
+
+[ec2-user@ip-172-31-13-80 ~]$ sh 04-script.sh
+Enter first number:
+5
+Enter second number:
+4
+Numbers are not equal
+
+
+[ec2-user@ip-172-31-13-80 ~]$ cat 05-script.sh
+#! /bin/bash
+
+echo "Check Eligiblity"
+echo "Enter Age: "
+
+read AGE
+
+if [ $AGE -gt 18 ]; then
+        echo "Eligible to work"
+else
+        echo "Not Eligible to work"
+fi
+
+
+[ec2-user@ip-172-31-13-80 ~]$ sh 05-script.sh
+Check Eligiblity
+Enter Age:
+20
+Eligible to work
+
+[ec2-user@ip-172-31-13-80 ~]$ vi 06-script.sh
+[ec2-user@ip-172-31-13-80 ~]$ sh 06-script.sh
+Enter number:
+23
+Positive number
+[ec2-user@ip-172-31-13-80 ~]$
+
+
+[ec2-user@ip-172-31-13-80 ~]$ cat 06-script.sh
+#! /bin/bash
+
+echo "Enter number: "
+
+read NUM1
+
+if [ $NUM1 -gt 0 ]; then
+        echo "Positive number"
+elif [ $NUM1 -lt 0 ]; then
+        echo "Negative number"
+else
+        echo "Number is zero"
+fi
+
+[ec2-user@ip-172-31-13-80 ~]$ sh 06-script.sh
+Enter number:
+0
+Number is zero
+
+
+Looping statements: specific statement(s) to repeat for multiple times -> executes statements multiple times
+
+Conditional-based loops (while)
+Range-based conditional based loop (for)
+For loop: 
+
+[ec2-user@ip-172-31-13-80 ~]$ vi 07-script.sh
+[ec2-user@ip-172-31-13-80 ~]$ cat 07-script.sh
+#! /bin/bash
+
+for (( i=1; i<=6; i++))
+  do
+          echo "$i"
+  done
+
+[ec2-user@ip-172-31-13-80 ~]$ sh 07-script.sh
+1
+2
+3
+4
+5
+6
+
+
+while loop executes statements until condition is true
+
+[ec2-user@ip-172-31-13-80 ~]$ cat 08-script.sh
+#! /bin/bash
+
+echo "Enter number: "
+
+read NUM
+
+while [ $NUM -le 6 ]
+ do
+         echo "$NUM"
+         let NUM++
+done
+
+[ec2-user@ip-172-31-13-80 ~]$ sh 08-script.sh
+Enter number:
+1
+1
+2
+3
+4
+5
+6
+
+without let NUM++, it will become an infinite loop
+
+
+[ec2-user@ip-172-31-13-80 ~]$ cat 09-script.sh
+#! /bin/bash
+
+echo "Enter Number: "
+read NUM
+
+while [ $NUM -gt 0 ]
+ do
+         echo "$NUM"
+         let NUM--
+done
+
+
+Enter Number:
+12
+12
+11
+10
+9
+8
+7
+6
+5
+4
+3
+2
+1
+
+Functions or Methods:
+used to perform some tasks, some actions, some activities
+divide large tasks into multiple smaller tasks
+functions are reusable
+
+Function <function-name>() {
+	Activity
+}
+
+call <function-name>
+
+[ec2-user@ip-172-31-13-80 ~]$ vi 09-function-script.sh
+[ec2-user@ip-172-31-13-80 ~]$ cat 09-function-script.sh
+#! /bin/bash
+
+function greeting(){
+        echo "Hello Aliens!!!"
+        echo "Welcome to DevOps course"
+        echo "DevOps job requires lot of efforts"
+}
+greeting
+[ec2-user@ip-172-31-13-80 ~]$ sh 09-function-script.sh
+Hello Aliens!!!
+Welcome to DevOps course
+DevOps job requires lot of efforts
+
+Write a script with function that will read filename from user then print contents from file
+
+[ec2-user@ip-172-31-13-80 ~]$ cat 10-script.sh
+#! /bin/bash
+
+function doTask(){
+        echo "Enter filename: "
+
+        read FILENAME
+
+        cat $FILENAME
+}
+
+doTask
+
+[ec2-user@ip-172-31-13-80 ~]$ sh 10-script.sh
+Enter filename:
+alien.txt
+This is Alien file and i am on 3.99.128.157 machine
+DevOps with AWS learners must focus on hands-on practice after class
+[ec2-user@ip-172-31-13-80 ~]$
+
+Write a function to print if file exists otherwise create a new file
+
+[ec2-user@ip-172-31-13-80 ~]$ cat 11-script-filefunction.sh
+#! /bin/bash
+
+function fileManager(){
+        echo "Enter filename: "
+
+        read FILE
+
+        if [ -f "$FILE" ]; then
+                echo "File exists and content is printed below"
+                cat $FILE
+        else
+                echo "File doesn't exist hence creating a new file"
+                touch $FILE
+                echo "File $FILE is created"
+        fi
+}
+
+fileManager
+
+
+[ec2-user@ip-172-31-13-80 ~]$ sh 11-script-filefunction.sh
+Enter filename:
+alien-test.txt
+File doesn't exist hence creating a new file
+File alien-test.txt is created
+[ec2-user@ip-172-31-13-80 ~]$ sh 11-script-filefunction.sh
+Enter filename:
+alien.txt
+File exists and content is printed below
+This is Alien file and i am on 3.99.128.157 machine
+DevOps with AWS learners must focus on hands-on practice after class
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
