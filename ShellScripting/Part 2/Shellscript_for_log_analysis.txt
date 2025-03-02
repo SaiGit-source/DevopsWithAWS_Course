@@ -1,0 +1,104 @@
+Shell script for log analysis
+
+[ec2-user@ip-172-31-13-80 ~]$ cat log-analyzer.sh
+#! /bin/bash
+
+# Count total error message occurences
+
+LOG_FILE=/var/log/messages
+
+ERROR_COUNT=$(sudo grep -c "ERROR" "$LOG_FILE")
+
+# Printing count of error messages
+#
+echo "Number of errors in system log file : $ERROR_COUNT"
+
+
+[ec2-user@ip-172-31-13-80 ~]$ sh log-analyzer.sh
+Number of errors in system log file : 36
+
+
+Shell script to create file backup => tar
+
+
+[ec2-user@ip-172-31-13-80 ~]$ cat backup.sh
+#! /bin/bash
+
+SOURCE_DIR=/home/ec2-user
+TARGET_DIR=/home/ec2-user
+
+echo "Backup process starting..."
+
+tar -czvf "$SOURCE_DIR/backup_$(date +%Y%m%d).tar.gz" "$TARGET_DIR"
+
+echo "Backup is completed with a tar file"
+
+
+it has created a backup file
+
+[ec2-user@ip-172-31-13-80 ~]$ ls -l
+-rw-r--r--. 1 ec2-user ec2-user   44 Mar  1 23:04 alien_date.txt
+-rw-r--r--. 1 ec2-user ec2-user    0 Feb 24 00:25 alientest.txt
+-rw-r--r--. 1 ec2-user ec2-user  217 Mar  2 01:37 backup.sh
+-rw-r--r--. 1 ec2-user ec2-user 6622 Mar  2 01:37 backup_20250302.tar.gz
+-rw-r--r--. 1 ec2-user ec2-user  251 Mar  1 22:57 cmd_args
+
+
+Create a Shellscript to create project structure:
+
+[ec2-user@ip-172-31-13-80 ~]$ vi project-structure.sh
+[ec2-user@ip-172-31-13-80 ~]$ cat project-structure.sh
+#! /bin/bash
+
+PROJECT_NAME="alienapp"
+ROOT_DIR=$(pwd)
+
+
+create_project(){
+
+        mkdir $1
+        mkdir $1/src
+        mkdir $1/tests
+        mkdir $1/docs
+        mkdir $1/config
+        touch $1/config/config.yaml
+        touch $1/docs/README.md
+        touch $1/src/app.js
+        touch $1/src/main.css
+        touch $1/src/index.html
+        touch $1/tests/test.js
+}
+
+create_project $ROOT_DIR/$PROJECT_NAME
+
+
+[ec2-user@ip-172-31-13-80 ~]$ cd alienapp/
+[ec2-user@ip-172-31-13-80 alienapp]$ ls
+config  docs  src  tests
+
+sudo yum install tree
+
+[ec2-user@ip-172-31-13-80 ~]$ tree alienapp/
+alienapp/
+├── config
+│   └── config.yaml
+├── docs
+│   └── README.md
+├── src
+│   ├── app.js
+│   ├── index.html
+│   └── main.css
+└── tests
+    └── test.js
+
+4 directories, 6 files
+
+
+Cron job scheduling
+
+
+
+
+
+
+
