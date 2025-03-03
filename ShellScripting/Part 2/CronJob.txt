@@ -1,0 +1,127 @@
+Cron Jobs
+
+if you want to schedule something they you can go with Cron expressions or Cron jobs
+
+like emails or marketing promotions etc
+
+All Scheduling jobs will be done with help of this
+
+when you want to wake up, you are scheduling your alarm. similar to alarm, you are scheduling your script file execution
+
+
+In Linux systems, we use CRON to schedule jobs/scripts execution. say you want to check health of system or backup files every 5 days etc. all can be done with the help of Cron job
+
+
+CROND -> Daemon process (Background process) -> in the background, every minute this will be checking for CronJobs, which are scheduled for executions
+
+CronJob -> Scheduled job that allows you to run scripts or commands at specified intervals
+
+Crontab -> it's a file to schedule cronjobs for execution. it's a file to configure Cronjobs for execution
+
+sudo yum install -y cronie
+sudo systemctl enable crond
+sudo systemctl start crond
+
+
+sudo systemctl status crond
+
+
+[ec2-user@ip-172-31-13-80 ~]$ sudo systemctl status crond
+● crond.service - Command Scheduler
+     Loaded: loaded (/usr/lib/systemd/system/crond.service; enabled; preset: enabled)
+     Active: active (running) since Sun 2025-03-02 18:00:06 UTC; 17s ago
+   Main PID: 66472 (crond)
+      Tasks: 1 (limit: 1111)
+     Memory: 984.0K
+        CPU: 5ms
+     CGroup: /system.slice/crond.service
+             └─66472 /usr/sbin/crond -n
+
+
+
+Check Cron status: sudo systemctl status cron
+
+service cron start
+service cron stop
+service cron restart
+
+
+
+crontab -l -> List existing cronjobs
+
+crontab -r -> to remove cronjobs that are created
+
+crontab -e -> to create a new cronjob
+
+Cronjob Syntax:
+***** <ScriptFile>  => every minute whatever script file we have specified will be executed
+first * -> represent minutes (0-59)
+second * -> represents hour (0-23)
+third * -> represents day (1-31)
+fourth * -> represents month (1-12)
+fifth * -> represents day of week (0-6)
+
+say you want to execute your script file every 15 minutes
+*/15 * * * * <ScriptFile> only first */15 others we want to keep it as it is
+
+run the script everyday at 5Am
+0 5 * * * <ScriptFile>
+
+run the script everyday at 5Pm
+0 17 * * * <ScriptFile>
+
+to write cron: we have to configure crontab
+
+crontab -e
+
+* * * * * echo "printing every minute cronjob" >> cron1.txt
+
+~
+
+[ec2-user@ip-172-31-13-80 ~]$ ls -l
+-rw-r--r--. 1 ec2-user ec2-user  187 Mar  1 22:38 cmd_args.sh
+-rw-r--r--. 1 ec2-user ec2-user   73 Mar  1 22:45 cmd_args_1
+-rw-r--r--. 1 ec2-user ec2-user   30 Mar  2 19:28 cron1.txt
+
+cron1.txt file is created every minute
+
+next one at 19:29
+
+-rw-r--r--. 1 ec2-user ec2-user   60 Mar  2 19:29 cron1.txt
+
+it appends in the same file
+[ec2-user@ip-172-31-13-80 ~]$ cat cron1.txt
+printing every minute cronjob
+printing every minute cronjob
+printing every minute cronjob
+
+to remove cronjobs
+crontab -r
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+

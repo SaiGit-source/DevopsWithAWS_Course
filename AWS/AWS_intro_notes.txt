@@ -1,0 +1,125 @@
+AWS
+
+one of the cloud providers
+
+Cloud computing:
+Infrastructure -> all the resources required to run project/company
+example: all the machines, network, storage, database, monitoring application
+
+we can maintain our infrastructure in two ways
+
+1. On premises infrastructure -> we need to purchase and maintain all our resources. 
+	Limitations: high cost maintenance, scalability issues, security issues, network issues
+	To overcome all the associated problems, we have cloud infrastructure
+2. Cloud infrastructure
+
+
+Cloud computing: Process of delivering IT resources over the internet on-demand basis of "Pay As You Go" model	
+	Advantages: Low cost compared to in prem infra (Pay as you go model)
+		    We can scale up as its internet based service -> Scalability is high
+		    High security
+		    Backup options are available
+Examples: Amazon, Azure, GCP, Oracle, Alibaba, Salesforce
+
+Cloud Service Models:
+1. IAAS -> Infrastructure As A Service
+2. PAAS -> Platform As A Service
+3. SAAS -> Software As A Service
+
+SAAS: A cloud provider will give applications to run our businesses. Say I am starting a company -> for meetings, i use Zoom. Google Drive is another example of Saas, Teams. All infrastructure, Platform, Application all provided and maintained by Provider itself. it is called as 'Saas'
+
+PAAS: Provider will help us with ready-made platforms to run our application. we need to take care of our application. Application is ours. Only Infrastructure and Platform are provided and maintained by Provider. AWS Elastic Beanstalk
+
+IAAS: Provider will help us with only Infrastructure. Example: Only machines, networking, storage (AWS EC2, S3)
+Which platform is used to run Java application? that's ours. 
+
+AWS is Amazon Web Services -> web-based services that means we can access the services through inter-networking
+AWS has 114 Availability zones within 36 geographic regions
+
+AWS works based on Pay As you Go model 
+
+
+It is recommended to select nearest region to create infrastructure
+AWS also provides free tier account (only some services are free) for learning and exploring purpose
+Note: if we use any of the paid services, the bill will be generated. however, AWS will not auto-deduct bill amount from credit card. But AWS will anyways send reminders for bill payments. if we fail to pay the bill, account will be suspended. we could also reach out to AWS support team for help with billing. They support newbies and learners
+
+AWS services: 200+ services are available in AWS. Most popular is EC2 (Elastic Compute Cloud) -> it will help to create Virtual machines (charged hourly bases)
+1. EC2 (Elastic Compute Cloud) -> it will help to create Virtual machines (charged hourly bases)
+2. EBS: Storage (Hard Disk, SSD ---> 16TB)
+3. Load balancer: to distribute load
+4. Autoscaling: Adjust capacity based on demand
+5. S3: unlimited storage (files)
+6. RDS: Relational database service
+7. EFS: Elastic File System -> Shared file system (files accessible between multiple virtual machines)
+8. IAM: Identity and Access Management: we can control what access users can have
+9. VPC: Virtual Private Cloud (Networking) -> IP, subnets, Route tables, Internet Gateway (IGw), NATGw, VPC peering, NACLS 
+10. Cloud formation: Infrastructure As a Code. Infrastructure will be created with code --> Alternative for this is Terraform
+11. AWS CLI: Command Line Interface
+12. Elastic Kubernetes Service: EKS (The most trusted Kubernetes cluster)
+13. Elastic Beanstalk: Platform As a Service
+14. Serverless computing: AWS Lambdas
+15. Route 53: Domain mapping (www.gmail, www.udemy)
+16. Cloud watch: monitoring service
+17. Simple Notification Service SNS (to send alerts)
+18. Billing overview
+
+
+EC2 service
+Elastic Compute Cloud. it is a most demanded service in AWS. to create virtual machines in AWS cloud. 
+EC2 VM, EC2 instance, EC2 server, all refer to the same
+
+To encourage learners AWS provided t2.micro/t3.micro for 1 year free (monthly 750 hours)
+
+EC2 is a paid service (hourly billing), even if you use from 11:15am to 11:30am, you are billied for 1 hour still
+
+EC2 VM minimum billing period is 1 hour
+
+EC2 VM will have storage with EBS (Elastic Block Storage) service: EC2 Windows VM: 30GB (default), for Linux it is 8GB, max capacity of EBS is 16TB
+
+for EC2 VMs, VPC service will provide all network securities
+
+how to create AMI? Amazon Machine Image is used for creation of EC2 VM. We use key-pair to secure EC2
+To manage traffic to VMs, Security Groups is used. to allow incoming and outgoing traffic to this machine
+
+Note: One Key pair can be used for multiple EC2 instances
+One security group can be used for multiple EC2 instances
+
+for one EC2 VM we need AMI, Instance type, Keypair, VPC, Security group, EBS for Hard disk
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
