@@ -1,0 +1,22 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Build Linux Web Server
+
+Parameters:
+  LatestAmiId:
+    Description: AMI for Amazon Linux 2 EC2 Instance
+    Type: 'AWS::SSM::Parameter::Value<AWS::EC2::IMage::Id>'
+    Default: '/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2'
+
+Resources:
+  webserver1:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      InstanceType: 't2.micro'
+      ImageId: !Ref LatestAmiId
+      SecurityGroupIds:
+        - !Ref WebserverSecurityGroup
+      Tags:
+        - Key: 'Name'
+          Value: 'teluskoserver1'
+      UserData:
+        Fn::Base64: !Sub |
