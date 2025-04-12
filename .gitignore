@@ -15,8 +15,8 @@ override.tf.json
 *_override.tf.json
 
 # Terraform variable files containing sensitive data
-*.tfvars
-*.tfvars.json
+#*.tfvars
+#*.tfvars.json
 
 # Ignore Terraform plan output
 *.plan
