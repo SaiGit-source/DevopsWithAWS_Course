@@ -1,0 +1,18 @@
+---
+employee:
+  id: 01
+  name: Abc
+  job: 
+    experience: 5 years
+    type:
+      - permanent
+      - contract
+student:
+  id: 5
+  name: Xyz
+  skills: 
+    - edit videos
+    - graphic design
+...
+
+
