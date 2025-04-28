@@ -1,0 +1,11 @@
+
+---
+- hosts: all
+  tasks:
+    - name: Create file in  all the managed nodes
+      file:
+        path: /home/ansible/fromControlNode.txt
+        state: touch
+...
+
+
