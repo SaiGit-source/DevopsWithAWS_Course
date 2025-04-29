@@ -1,0 +1,29 @@
+---
+- hosts: webservers
+  become: true
+  vars:
+    package_name: httpd
+  tasks:
+    - name: Install "{{package_name}}" in only Managed node1
+      yum:
+        name: "{{package_name}}"
+        state: latest
+      tags:
+        - install
+
+    - name: Copy index.html file
+      copy:
+        src: index.html
+        dest: /var/www/html/index.html
+      tags:
+        - copy
+
+      notify:
+        starting httpd
+    - name: Starting "{{package_name}}" package
+      service:
+        name: "{{package_name}}"
+        state: started
+
+...
+
