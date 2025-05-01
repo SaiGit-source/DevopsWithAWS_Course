@@ -1,0 +1,14 @@
+---
+# tasks file for apache
+- name: Install httpd in only Managed node1
+  yum:
+    name: httpd
+    state: present
+
+- name: Copy index.html file
+  copy:
+    src: index.html
+    dest: /var/www/html/index.html
+  notify:
+    - restart apache
+...
