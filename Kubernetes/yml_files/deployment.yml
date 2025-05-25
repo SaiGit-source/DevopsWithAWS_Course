@@ -1,0 +1,25 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: javawebdeployment
+spec:
+  replicas: 2
+  strategy: 
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: javawebapp
+  template:
+    metadata:
+      name: javawebpod
+      labels:
+        app: javawebapp
+    spec:
+      containers:
+        - name: javawebappcontainer
+          image: hacker123shiva/springbt-in-docker:latest
+          ports:
+           - containerPort: 8080
+...
+
