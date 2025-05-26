@@ -1,0 +1,28 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: javawebgreendeploy
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: java-web-app
+      version: v2
+      color: green
+  template:
+    metadata:
+      labels:
+        app: java-web-app
+        version: v2
+        color: green
+    spec:
+      containers:
+        - name: javawebappcontainer
+          image: jmalloc/echo-server
+          imagePullPolicy: Always
+          ports:
+           - containerPort: 8080
+...
