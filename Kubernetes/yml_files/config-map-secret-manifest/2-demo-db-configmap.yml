@@ -1,0 +1,12 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: demo-db-config-secrete  # Name of the secret
+  labels:
+    secrete: demo-db-config-secrete  # (Optional) label for identification
+data:
+  DB_USER_NAME_VALUE: cm9vdA==          # Base64 for "root"
+  DB_PASSWORD_VALUE:  cm9vdDEyMw==        # Base64 for "root"
+type: Opaque
+...
