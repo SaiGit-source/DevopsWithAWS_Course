@@ -1,0 +1,59 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-boot-mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spring-boot-mysql
+  template:
+    metadata:
+      labels:
+        app: spring-boot-mysql
+    spec:
+      containers:
+        - name: spring-boot-mysql
+          image: hacker123shiva/springboot-mysql-app:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: demo-db-config-map
+                  key: DB_HOST_SERVICE_NAME_VALUE
+
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: demo-db-config-map
+                  key: DB_SCHEMA_VALUE
+
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: demo-db-config-secrete
+                  key: DB_USER_NAME_VALUE
+
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: demo-db-config-secrete
+                  key: DB_PASSWORD_VALUE
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: springboot-mysql-svc
+spec:
+  type: NodePort
+  selector:
+    app: spring-boot-mysql
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+      nodePort: 30785
+...

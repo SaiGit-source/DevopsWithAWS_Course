@@ -1,0 +1,57 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-app-db-deployment
+  labels:
+    app: demo-app-db
+spec:
+  replicas: 1
+  selector:                      # This is important and was misplaced in your YAML
+    matchLabels:
+      app: demo-app-db-pod
+  template:
+    metadata:
+      labels:
+        app: demo-app-db-pod
+    spec:
+      volumes:
+        - name: demo-app-db-volume
+          persistentVolumeClaim:
+            claimName: demo-db-pvc
+      containers:
+        - name: demo-app-db
+          image: mysql:8.0          # Add a version tag to ensure consistency
+          ports:
+            - containerPort: 3306
+          volumeMounts:
+            - name: demo-app-db-volume
+              mountPath: /var/lib/mysql   # ✅ MySQL expects data here, not /opt/mysql
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: demo-db-config-secrete
+                  key: DB_PASSWORD_VALUE
+            - name: MYSQL_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: demo-db-config-map
+                  key: DB_SCHEMA_VALUE
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: demo-app-db-service
+  labels:
+    app: demo-app-db-service
+spec:
+  type: ClusterIP
+  ports:
+    - port: 3306
+      targetPort: 3306
+      protocol: TCP
+  selector:
+    app: demo-app-db-pod
+...
+
