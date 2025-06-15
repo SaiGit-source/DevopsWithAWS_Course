@@ -1,0 +1,51 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: javawebdeploy
+  labels:
+    app: javawebapp
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: javawebapp
+  template:
+    metadata:
+      name: javawebpod
+      labels:
+        app: javawebapp
+    spec:
+      containers:
+        - name: javawebapp
+          image: hacker123shiva/springbt-in-docker:latest
+          ports:
+            - containerPort: 8080 # Your Spring Boot app listens on 8080
+          readinessProbe:
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            timeoutSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: 8080 # Corrected: Probe must check the port your app is listening on
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: javawebapp-service # Name for your LoadBalancer Service
+  labels:
+    app: javawebapp
+spec:
+  type: LoadBalancer # This exposes your service externally
+  selector:
+    app: javawebapp # This must match the 'app' label in your Deployment's template
+  ports:
+    - protocol: TCP
+      port: 80 # The port the LoadBalancer will listen on (e.g., standard HTTP port)
+      targetPort: 8080 # The port your Spring Boot application is running on inside the pod
+      # You can optionally specify a nodePort if needed, e.g., nodePort: 30080
+
+...
+

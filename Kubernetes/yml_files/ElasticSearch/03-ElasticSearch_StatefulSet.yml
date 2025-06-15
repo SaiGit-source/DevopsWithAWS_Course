@@ -1,0 +1,64 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: elasticsearch-logging
+  namespace: efklog
+  labels:
+    k8s-app: elasticsearch-logging
+    addonmanager.kubernetes.io/mode: Reconcile
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: elasticsearch-logging
+  namespace: efklog
+  labels:
+    k8s-app: elasticsearch-logging
+spec:
+  serviceName: "elasticsearch-logging"
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: elasticsearch-logging
+  template:
+    metadata:
+      labels:
+        k8s-app: elasticsearch-logging
+    spec:
+      serviceAccountName: elasticsearch-logging
+      containers:
+      - name: elasticsearch-logging
+        image: quay.io/fluentd_elasticsearch/elasticsearch:v7.3.2
+        imagePullPolicy: Always
+        resources:
+          limits:
+            cpu: 500m
+            memory: 3Gi
+          requests:
+            cpu: 100m
+            memory: 1Gi
+        ports:
+        - containerPort: 9200
+          name: db
+          protocol: TCP
+        - containerPort: 9300
+          name: transport
+          protocol: TCP
+        volumeMounts:
+        - name: elasticsearch-storage
+          mountPath: /data
+        env:
+        - name: "NAMESPACE"
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+  volumeClaimTemplates:
+  - metadata:
+      name: elasticsearch-storage
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 10Gi
+
